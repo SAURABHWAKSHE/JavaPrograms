@@ -2,17 +2,25 @@ package com.bridgelabz.utility;
 
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Util
 {
-
+	public static Scanner scanner = new Scanner(System.in);
 	static String [] sTring,str ;
 	static int k=0;
 	static double startTime;
 	static double endTime;
 	static double elapsedTime=0;
 	static double eTime[] = new double[6];
+	static LinkedList <String> linkedlist= new LinkedList<String>(); 
+	static LinkedList <Integer> lntegerlist= new LinkedList<Integer>(); 
 	/*
 	 * function to find a year is leapyear or not
 	 */
@@ -548,4 +556,97 @@ public class Util
 
 			return false;
 		}
+		public static void unorderedList(String[] fileContent, String st) 
+		{
+			// TODO Auto-generated method stub
+			int i;
+			for(i=0;i<fileContent.length;i++)
+			{
+				linkedlist.add(fileContent[i]);
+			}
+			
+			if(linkedlist.contains(st))
+			{
+				System.out.println("String is already there in List.");
+				linkedlist.remove(st);
+				System.out.println("so removed From List.");
+				
+			}
+			else
+			{
+				System.out.println("String is not there in List.");
+				linkedlist.add(st);
+				System.out.println("Added To The List.");
+			}
+				
+			System.out.println("List Content:");
+			for(String str:linkedlist)
+				System.out.println(str);
+		}
+		public static void unorderedListInt(String fileContent) 
+		{
+			// TODO Auto-generated method stub
+			int i;
+			BufferedReader bfr=new BufferedReader(new FileReader(fileContent));
+			String[]content;
+			try 
+	        {
+				String str=((bfr.readLine()).toLowerCase());
+				content=str.split(" ");
+			} 
+	        catch (IOException e) 
+	        {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (String number : content) {
+				linkedlist.add(Integer.valueOf(number));
+			}
+			
+			
+		}
+	/*	public static void searchNumber()
+		{
+			do
+			{
+				System.out.println("Enter a Num That You Want To Find:");
+				int num = Util.scanner.nextInt(); 
+				if(linkedlist.contains(num))
+				{
+					System.out.println("String is already there in List.");
+					linkedlist.remove(linkedlist.indexOf(num));
+					System.out.println("so removed From List.");
+					
+				}
+				else
+				{
+					System.out.println("String is not there in List.");
+					linkedlist.addAll(num);
+					System.out.println("Added To The List.");
+				}
+					
+				System.out.println("List Content:");
+				for(String str:linkedlist)
+					System.out.println(str);
+			}
+		}
+	*/
+		 
+			public static void searchNumber() {
+				char answer = ' ';
+				do {
+					System.out.println("Enter the number to be searched..");
+					int number = scanner.nextInt();
+					if (linkedlist.contains(number)) {
+						System.out.println(number + " is found..Trying to delete it..");
+						linkedlist.remove(linkedlist.indexOf(number));
+					} else {
+						System.out.println(number + " is not found..Trying to add it.. ");
+						linkedlist.add(sTring);
+					}
+					Collections.sort(linkedlist);
+					System.out.println("Do u wish to continue..type(Y/N)");
+					answer = scanner.next().charAt(0);
+				} while (answer == 'Y' || answer == 'y');
+			}
 }
