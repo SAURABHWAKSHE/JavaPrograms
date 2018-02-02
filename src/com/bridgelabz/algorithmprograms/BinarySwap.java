@@ -25,7 +25,7 @@ public class BinarySwap
 		System.out.println();
 		int [] sWapped = Util.swapNibbles(binary,size);
 		System.out.println("Binary Num After NibbSwap:");
-		for(int i=0;i<sWapped.length;i++)
+		for(int i=sWapped.length-1;i>=0;i--)
 		{
 			System.out.print(sWapped[i]);
 		}

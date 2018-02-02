@@ -1,26 +1,34 @@
 package com.bridgelabz.utility;
+import com.bridgelabz.utility.LinkedList;
 
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Util
 {
 	public static Scanner scanner = new Scanner(System.in);
-	static String [] sTring,str ;
+	static String [] sTring ;
+	String str;
 	static int k=0;
 	static double startTime;
 	static double endTime;
 	static double elapsedTime=0;
 	static double eTime[] = new double[6];
-	static LinkedList <String> linkedlist= new LinkedList<String>(); 
-	static LinkedList <Integer> lntegerlist= new LinkedList<Integer>(); 
+	static LinkedList <String> list= new LinkedList<String>(); 
+	static LinkedList <Integer> integerList= new LinkedList<Integer>(); 
 	/*
 	 * function to find a year is leapyear or not
 	 */
@@ -374,6 +382,10 @@ public class Util
 		C = (tempFah -32) * 5/9; 
 		return C;
 	 }
+	 /*
+	  * binarySearchString function to read string and find whether the user 
+	  * expected word is there in the string or not
+	  */
 	 public static boolean binarySearchString(String [] city,String key)
 		{
 			int i,j;
@@ -456,11 +468,11 @@ public class Util
 					}
 				}
 			}
-			System.out.println("Sorted Array Of BubbleSort:");
+			/*System.out.println("Sorted Array Of BubbleSort:");
 			for(int i = 0;i<sTring.length;i++)
 			{
 				System.out.print( sTring[i]+"   ");
-			}
+			}*/
 			System.out.println();	
 			return sTring;
 		}
@@ -556,97 +568,184 @@ public class Util
 
 			return false;
 		}
-		public static void unorderedList(String[] fileContent, String st) 
+		/*
+		 * unorderedList function to read data from the file
+		 * search for required data
+		 * sort and then add to file that is updated 
+		 */
+		public static void unorderedList(String str) throws IOException 
 		{
 			// TODO Auto-generated method stub
 			int i;
-			for(i=0;i<fileContent.length;i++)
+			BufferedReader bfr=new BufferedReader(new FileReader(str));
+
+			String reader;
+			reader=bfr.readLine().toLowerCase();
+			bfr.close();
+			String data[]=reader.split(" ");
+			String[] array = bubbleSortString(data);
+			//
+			for(i=0;i<array.length;i++)
 			{
-				linkedlist.add(fileContent[i]);
+				list.insertData(array[i]);
 			}
-			
-			if(linkedlist.contains(st))
-			{
-				System.out.println("String is already there in List.");
-				linkedlist.remove(st);
-				System.out.println("so removed From List.");
-				
-			}
-			else
-			{
-				System.out.println("String is not there in List.");
-				linkedlist.add(st);
-				System.out.println("Added To The List.");
-			}
-				
-			System.out.println("List Content:");
-			for(String str:linkedlist)
-				System.out.println(str);
+			searchWord(array);
 		}
-		public static void unorderedListInt(String fileContent) 
-		{
-			// TODO Auto-generated method stub
-			int i;
-			BufferedReader bfr=new BufferedReader(new FileReader(fileContent));
-			String[]content;
-			try 
-	        {
-				String str=((bfr.readLine()).toLowerCase());
-				content=str.split(" ");
-			} 
-	        catch (IOException e) 
-	        {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (String number : content) {
-				linkedlist.add(Integer.valueOf(number));
-			}
 			
-			
-		}
-	/*	public static void searchNumber()
+		private static void searchWord(String []array1) throws IOException 
 		{
+			char character = ' ';
 			do
 			{
-				System.out.println("Enter a Num That You Want To Find:");
-				int num = Util.scanner.nextInt(); 
-				if(linkedlist.contains(num))
+				System.out.println("Enter a Word That You Want To Find:");
+				String word = Util.scanner.next(); 
+				
+				if(list.search(word))
 				{
 					System.out.println("String is already there in List.");
-					linkedlist.remove(linkedlist.indexOf(num));
+					list.remove(word);
 					System.out.println("so removed From List.");
-					
 				}
 				else
 				{
 					System.out.println("String is not there in List.");
-					linkedlist.addAll(num);
+					//list.insertData(word);
+					list.InsertRightPosition(word);
 					System.out.println("Added To The List.");
+					//appendlist(array1,word);
 				}
-					
-				System.out.println("List Content:");
-				for(String str:linkedlist)
-					System.out.println(str);
+				
+				System.out.println("Do you want to find another word:");
+				character = Util.scanner.next().charAt(0);
+			}
+			while(character =='Y'||character =='y');
+			
+			list.dispNode();
+			addToFile();
+				//System.out.println("List Content:");
+				//for(String str:list)
+				//System.out.println(str);
+		}
+		public static void appendlist(String[] array, String word){
+			String newArray[] = new String[array.length+1];
+			for (int i = 0; i < newArray.length-1; i++) {
+				newArray[i]=array[i];
+			}
+			newArray[array.length] = word;
+			String [] sortList = bubbleSortString(newArray);
+			for (int i = 0; i < sortList.length; i++) {
+				System.out.print(sortList[i]+" ");
 			}
 		}
-	*/
-		 
-			public static void searchNumber() {
-				char answer = ' ';
-				do {
-					System.out.println("Enter the number to be searched..");
-					int number = scanner.nextInt();
-					if (linkedlist.contains(number)) {
-						System.out.println(number + " is found..Trying to delete it..");
-						linkedlist.remove(linkedlist.indexOf(number));
-					} else {
-						System.out.println(number + " is not found..Trying to add it.. ");
-						linkedlist.add(sTring);
-					}
-					Collections.sort(linkedlist);
-					System.out.println("Do u wish to continue..type(Y/N)");
-					answer = scanner.next().charAt(0);
-				} while (answer == 'Y' || answer == 'y');
+		private static void addToFile() throws IOException 
+		{
+		    FileWriter fr =null;
+	        FileWriter fr1 =null;
+	        try
+	        {   
+	        	File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/File.txt");
+		        fr = new FileWriter(writeFile);
+		        fr1 = list.writeListNode(fr);
+		        System.out.println("Data added in file :");
+	        }
+	        catch(Exception e) 
+	        {
+	        	e.printStackTrace();
+	        }
+	        finally 
+	        {
+		        fr.close();
+		        fr1.close();
+		    }
+			
+		}
+	
+		/*public static void orderedList() throws IOException
+		{
+			// TODO Auto-generated method stub
+		        File file=null;
+				BufferedReader br =null;
+				try
+				{
+					file = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/File1");
+					br = new BufferedReader(new FileReader(file));
+					String line;
+			        System.out.println("Reading File And Sorting:");	
+					while((line = br.readLine())!=null) 
+					{
+			       
+			        	String str= line;
+			        		
+			        	String SortArr[] = bubbleSortString(str);
+			        	int length = SortArr.length;
+			        	for(int i=0;i<length;i++) 
+			        	{
+			        		if(SortArr[i]==" ")
+			        		{
+			        			continue;
+			        		}else
+			        		{
+			        			
+			        			integerList.insertData(SortArr[i]);
+			        		}
+			        	}
+			        	
+			        }
+				}
+				catch(Exception e) 
+				{
+					e.printStackTrace();
+				}finally
+				{
+					br.close();
+				}  	
+				integerList.dispNode(); 
+				System.out.println("");
+		        System.out.println("Enter a element to search :");
+		        String num="";
+		        String strNo = scanner.nextLine();
+		        int ch = integerList.search(num);
+		        
+		        if(ch==0) 
+		        {
+		        	System.out.println("Num is Not present in a list So we insert it");
+		        	integerList.InsertRightPosition(num);
+		        	System.out.println("After insert :");
+		        	integerList.dispNode();
+		         }
+		        else
+		        {
+		        	System.out.println(ch+" Times num present in a list & we delete it");
+		        	for(int i=0;i<ch;i++) 
+		        	{
+		        		integerList.remove(num);
+		        	}
+		        	
+		        }   
 			}
+		/*public static char[] bubbleSort(String str){
+			
+			char charArr[] = str.toCharArray();  
+			int size = charArr.length;
+			
+			for(int i=0;i<size-1;i++) {
+				int flag = 0;
+				for(int j=0;j<size-1;j++) {
+					
+					if(charArr[j]>charArr[j+1]) {
+						flag = flag+1;
+						char temp = charArr[j];
+						charArr[j] = charArr[j+1];
+						charArr[j+1] = temp;
+					}
+				} 
+				if(flag==0){
+					break;
+				}
+			}
+			return charArr;
+			
+		}*/
+
+		
 }
