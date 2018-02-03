@@ -2,52 +2,67 @@ package com.bridgelabz.utility;
 
 public class Queue<T> {
 
-	private int front;
-	private int rear;
-	private T arr[];
-	private int size;
-	@SuppressWarnings("unchecked")
+	private  int rear =-1, front = -1;
+	private  int queueSize, currentSize=0;
+	private  T[] array;
 	
 	public Queue(int size){
-		this.size=size;
-		this.front=0;
-		this.rear =0;
-		arr =(T[])new Object[size];
+		queueSize = size;
+		array = (T[]) new Object[queueSize];
 	}
-	public boolean isFull() {
-		if(rear==size-1){
-			return true;
-		}else {
-			return false;
+	
+	/*
+	 * method to add elements to queue array
+	 */
+	public void enQueue(T element){
+		if(isFull()){
+			System.out.println("queue is full. cannot insert element");
 		}
-	}
-	public boolean isEmpty() {
-		if(front==size){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	public void Enqueue(T data) {
-		if(isFull()) {
-			System.out.println("Queue is full");
-		}else {
-			
-			
-			arr[rear++]=data;
-			
-		}
-	} 
-	public void Dequeue() {
-		if(isEmpty()){
-			System.out.println("Queue is empty");
-		}else {
+		else{
+			rear++;
+			array[rear] = element;
+			currentSize++;
+			if(rear == queueSize-1){
+				rear=0;
+			}
+		}		
+	}	
+	
+	
+	/*
+	 * method to delete element from queue array
+	 */
+	public T deQueue(){
+		if(isEmpty())
+			System.out.println("queue is empty. cannot delete elements");
+		else
 			front++;
-		}
-	}
-	public T frontEle() {
+			if (front == queueSize)
+			front = 0;
 		
-		return arr[front];
+			T element = array[front];
+			currentSize--;
+		return element;
 	}
+	
+	
+	/*
+	 * method to check if queue is full or not
+	 */
+	public boolean isFull(){
+		return (currentSize == queueSize);
+	}
+	
+	/*
+	 * method to check if queue is empty or not
+	 */
+	public boolean isEmpty(){
+		return(currentSize == 0);	
+	}
+
+	public int size() {
+		// TODO Auto-generated method stub
+		return currentSize;
+	}
+	
 }

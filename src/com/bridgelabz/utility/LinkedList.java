@@ -47,7 +47,7 @@ public class LinkedList<T>
         Node temp=head;
         while(temp!=null) 
         {
-            link.Enqueue(temp.data);
+            link.enQueue(temp.data);
             temp=temp.next;
         }
     }

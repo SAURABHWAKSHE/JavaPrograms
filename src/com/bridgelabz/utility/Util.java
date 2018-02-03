@@ -4,10 +4,12 @@ import com.bridgelabz.utility.LinkedList;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -363,6 +365,7 @@ public class Util
 		 System.out.println("Total "+num+" Prime Numbers are there in between "+low+" And "+high);
 		 return dupPrime;
 	 }
+	 
 	 /*
 	  * Function to convert celcius to fahrehneit
 	  */
@@ -659,6 +662,262 @@ public class Util
 		    }
 			
 		}
+		public static void cashCounter(int initCash, int numPeople)
+		{
+			// TODO Auto-generated method stub
+			Queue <Integer> queue = new Queue<Integer>(numPeople);
+			int i;
+			int balanceAmount = 0;
+			int balance = 0;
+			for(i=0;i<numPeople;i++)	
+			{
+				queue.enQueue(i);
+			}
+			for(i=0;i<numPeople;i++)	
+			{
+				//System.out.println("Enter The Customer Number");
+				System.out.println("Which Transaction Do you Want To Perform?/nEnter 1.deposit /n 2.Withdraw ");
+				int operation = Util.scanner.nextInt();
+			
+			
+				if(operation == 2 )
+				{
+					System.out.println("Enter The Amount That You Have:");
+					balance = Util.scanner.nextInt();
+				}
+				balanceAmount = bankCounter(operation,initCash,balance);
+			}	
+			System.out.println("All People Have Done Their Transaction Successfully");
+			System.out.println(balanceAmount+"");
+		}
+		private static int bankCounter(int choice, int initCash,int balance) 
+		{
+			// TODO Auto-generated method stub
+			int cash = initCash;
+			switch(choice)
+			{
+				case 1: System.out.println("How Much Money You Want To Deposit:");
+						int deposit = Util.scanner.nextInt();
+						cash+=deposit;
+						System.out.println("Trasaction Successful.Thank You.please Visit Again.");
+						//return cash;
+						break;
+						
+				case 2: System.out.println("How Money You Want To Withdraw:");
+						int withdrawAmount = Util.scanner.nextInt();
+			            if(cash==0)
+			            	System.out.println("Sorry!!Cash is Out Of Stock:");
+			            if(balance>=withdrawAmount)
+			            	cash-=withdrawAmount;
+			            else
+			            	System.out.println("Sorry!!You Don't Have Enough Balance.");
+			           // return cash;
+			            break;
+			   default: System.out.println("Invalid Choice.");
+			            
+			
+			}
+			return cash;
+			
+		}
+		public static void isPalindrome(String string) 
+		{
+			// TODO Auto-generated method stub
+			Queue <Character> queue = new Queue<Character>(string.length()); 
+			char [] characters = string.toCharArray();
+			int count=0 ,i=0;
+			for(i=0;i<characters.length;i++)
+			{
+				queue.enQueue(characters[i]);
+			}
+			for(i=characters.length-1;i>=0;i--)
+			{
+				//queue.peek();
+				char ch = queue.deQueue();
+				if(characters[i]==ch)
+					count++;
+					
+			}
+			if(count==characters.length)
+				System.out.println("String is Palindrome.");
+			else
+				System.out.println("String is Not Palindrome.");		
+		}
+		public static boolean isPrime(int low)
+		{
+			// TODO Auto-generated method stub
+			int i,j,count = 0;
+	                for(j=1;j<=low;j++)
+	                {
+	                    if(low%j==0) 
+	                        count++;
+	                }
+	                if(count==2)
+	                	return true;
+	         
+			return false;
+		}
+		public static void primeArray(int low, int high) 
+		{
+			// TODO Auto-generated method stub
+			ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+			int i,j,range=100,start=0;
+			int mRows = 10;
+			for (i = 0; i <mRows ; i++) 
+			{
+				list.add(new ArrayList<Integer>());
+			}
+			for (i = 0; i <mRows ; i++) 
+			{
+				for(j=start;j<high;j++)
+				{
+					if(isPrime(j) && j<=range)
+						list.get(i).add(j);
+				}
+				start+=100;
+				range+=100;
+			}
+			System.out.println("Prime Numbers:");
+			for (i = 0; i <mRows ; i++) 
+			{
+				for (j = 0; j <list.get(i).size() ; j++) 
+				{
+					System.out.print(list.get(i).get(j)+" ");
+				}
+				System.out.println();
+			}
+		}
+		public static void primeAnagram(int low, int high)
+		{
+			// TODO Auto-generated method stub
+			ArrayList<String> prime= new ArrayList<String>();
+			ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+			ArrayList<ArrayList<String>> listNotAnagram = new ArrayList<ArrayList<String>>();
+			int i,j;
+			
+			for(i=0;i<2;i++)
+			{
+				list.add(new ArrayList<String>());
+			}
+			for(i=0;i<2;i++)
+			{
+				listNotAnagram.add(new ArrayList<String>());
+			}
+			
+			for(i=low;i<=high;i++)
+			{
+				if(isPrime(i))
+					prime.add(Integer.toString(i));
+			}
+			
+			for(i=0;i<prime.size();i++)
+			{
+				for(j=i+1;j<prime.size();j++)
+				{
+					if(isAnagram(prime.get(i),prime.get(j)))
+					{
+						list.get(0).add(prime.get(i));
+						list.get(1).add(prime.get(j));
+					}
+					if(!isAnagram(prime.get(i),prime.get(j)))
+					{
+						listNotAnagram.get(0).add(prime.get(i));
+						listNotAnagram.get(1).add(prime.get(j));
+					}
+				}
+			}
+			System.out.println("Prime Anagrams:");
+			for (i = 0; i <2; i++) 
+			{
+				for (j = 0; j <list.get(i).size() ; j++) 
+				{
+					System.out.print(list.get(i).get(j)+" ");
+				}
+				System.out.println();
+			}
+			System.out.println("Prime And Not Anagrams:");
+			for (i = 0; i <2; i++) 
+			{
+				for (j = 0; j <listNotAnagram.get(i).size() ; j++) 
+				{
+					System.out.print(listNotAnagram.get(i).get(j)+" ");
+				}
+				System.out.println();
+			}
+		}
+		public static void primeAnagramStack(int low, int high) throws Exception 
+		{
+			// TODO Auto-generated method stub
+			GenericStack<String> stack = new GenericStack<String>(2);
+			ArrayList<String> prime = new ArrayList<String>();
+			for (int j = low; j <= high; j++) 
+			{
+				if (isPrime(j)) 
+				{
+					prime.add(Integer.toString(j));
+				}
+			}
+			for (int i = 0; i < prime.size() - 1; i++) 
+			{
+				int j = i + 1;
+				while (j < prime.size()) 
+				{
+					
+					if (isAnagram(prime.get(i), prime.get(j))) 
+					{
+						stack.push(prime.get(i));
+						stack.push(prime.get(j));
+					}
+					j++;
+				}
+			}
+			for (int i = stack.size()-1; i >=0; i -= 2) 
+			{
+				System.out.println(stack.pop() + " " + stack.pop());
+			}
+			
+			System.out.println("stack size " + stack.size());
+			int i = 0;
+			/*while(!stack.isStackEmpty())
+			{
+				System.out.println(stack.pop() + " " + stack.pop());
+				i+=2;
+			}*/
+			System.out.println("stcka size: " + i);
+		}
+		public static void primeAnagramQueue(int low, int high)
+		{
+			// TODO Auto-generated method stub
+			Queue<String> queue = new Queue<String>(400);
+			ArrayList<String> prime = new ArrayList<String>();
+			for (int j = low; j <= high; j++) 
+			{
+				if (isPrime(j)) 
+				{
+					prime.add(Integer.toString(j));
+				}
+			}
+			for (int i = 0; i < prime.size() - 1; i++) 
+			{
+				int j = i + 1;
+				while (j < prime.size()) 
+				{
+					
+					if (isAnagram(prime.get(i), prime.get(j))) 
+					{
+						queue.enQueue(prime.get(i));
+						queue.enQueue(prime.get(j));
+					}
+					j++;
+				}
+			}
+			for (int i =0 ; i<queue.size(); i += 2) 
+			{
+				System.out.println(queue.deQueue() + " " + queue.deQueue());
+			}
+			
+		}
+}
 	
 		/*public static void orderedList() throws IOException
 		{
@@ -748,4 +1007,4 @@ public class Util
 		}*/
 
 		
-}
+
