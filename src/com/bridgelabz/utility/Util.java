@@ -1,8 +1,6 @@
 package com.bridgelabz.utility;
 import com.bridgelabz.utility.LinkedList;
 
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -662,63 +660,81 @@ public class Util
 		    }
 			
 		}
-		public static void cashCounter(int initCash, int numPeople)
+		public static <T> void cashCounter(int initCash, int numPeople)
 		{
 			// TODO Auto-generated method stub
-			Queue <Integer> queue = new Queue<Integer>(numPeople);
+			Queue <T> queue = new Queue<T>(numPeople*3);
 			int i;
-			int balanceAmount = 0;
-			int balance = 0;
+			int balanceAmount = initCash;
+			//T  balance ;
 			for(i=0;i<numPeople;i++)	
 			{
-				queue.enQueue(i);
+				System.out.println("Enter your Name:");
+				T name = (T) Util.scanner.next();
+				queue.enQueue(name);
+				System.out.println("Enter Your A/c No.:");
+				T acNumber = (T) Util.scanner.next();
+				queue.enQueue(acNumber);
+				System.out.println("Enter The Balance That You Have:");
+				T balance = (T) Util.scanner.next();
+				queue.enQueue(balance);
 			}
 			for(i=0;i<numPeople;i++)	
 			{
-				//System.out.println("Enter The Customer Number");
-				System.out.println("Which Transaction Do you Want To Perform?/nEnter 1.deposit /n 2.Withdraw ");
-				int operation = Util.scanner.nextInt();
-			
-			
-				if(operation == 2 )
-				{
-					System.out.println("Enter The Amount That You Have:");
-					balance = Util.scanner.nextInt();
-				}
-				balanceAmount = bankCounter(operation,initCash,balance);
+				T name = queue.deQueue();
+				System.out.println("Hello "+name+" Welcome To The State Bank Of India.\n Please Give Your Bank Details for Further Process.");
+				int acNumber = Integer.parseInt((String) queue.deQueue());
+				int balance = Integer.parseInt((String) queue.deQueue());
+				balanceAmount = bankCounter(balanceAmount,balance);
 			}	
 			System.out.println("All People Have Done Their Transaction Successfully");
-			System.out.println(balanceAmount+"");
+			System.out.println(balanceAmount+" is available balance with bank.");
 		}
-		private static int bankCounter(int choice, int initCash,int balance) 
+		public static int bankCounter(int initCash,int balance) 
 		{
 			// TODO Auto-generated method stub
 			int cash = initCash;
-			switch(choice)
+			char opinion = ' ';
+			do
 			{
-				case 1: System.out.println("How Much Money You Want To Deposit:");
-						int deposit = Util.scanner.nextInt();
-						cash+=deposit;
-						System.out.println("Trasaction Successful.Thank You.please Visit Again.");
-						//return cash;
-						break;
-						
-				case 2: System.out.println("How Money You Want To Withdraw:");
-						int withdrawAmount = Util.scanner.nextInt();
-			            if(cash==0)
-			            	System.out.println("Sorry!!Cash is Out Of Stock:");
-			            if(balance>=withdrawAmount)
-			            	cash-=withdrawAmount;
-			            else
-			            	System.out.println("Sorry!!You Don't Have Enough Balance.");
-			           // return cash;
-			            break;
-			   default: System.out.println("Invalid Choice.");
-			            
-			
-			}
-			return cash;
-			
+				System.out.println("Which Transaction Do you Want To Perform?Enter :\n1.deposit \n2.Withdraw ");
+				int choice = Util.scanner.nextInt();
+				switch(choice)
+				{
+					case 1: System.out.println("How Much Money You Want To Deposit:");
+							int deposit = Util.scanner.nextInt();
+							cash+=deposit;
+							System.out.println("Transaction Successful.Thank You.please Visit Again.");
+							System.out.println("Your Current Balance is: "+(balance+deposit));
+							//return cash;
+							break;
+							
+					case 2: System.out.println("How Much Money You Want To Withdraw:");
+							int withdrawAmount = Util.scanner.nextInt();
+				            if(cash<balance)
+				            {
+				            	System.out.println("Sorry!!Cash is Out Of Stock:");
+				            	 break;
+				            }
+				            if(balance>=withdrawAmount && cash> balance)
+				            {
+				            	cash-=withdrawAmount;
+				            	System.out.println("Transaction Successful.Thank You.please Visit Again.");
+				            	System.out.println("Your Current Balance is: "+(balance-withdrawAmount));
+				            }
+				            else
+				            {
+				            	System.out.println("Sorry!!You Don't Have Enough Balance.");
+				            	
+				            }
+				            // return cash;
+				            break;
+					default: System.out.println("Invalid Choice.");
+			    }
+				System.out.println("Do you Want to Continue:");
+				opinion = Util.scanner.next().charAt(0);
+			}while(opinion == 'Y' || opinion =='y');
+			return cash;	
 		}
 		public static void isPalindrome(String string) 
 		{
@@ -799,7 +815,7 @@ public class Util
 			{
 				list.add(new ArrayList<String>());
 			}
-			for(i=0;i<2;i++)
+			for(i=0;i<1;i++)
 			{
 				listNotAnagram.add(new ArrayList<String>());
 			}
@@ -822,7 +838,7 @@ public class Util
 					if(!isAnagram(prime.get(i),prime.get(j)))
 					{
 						listNotAnagram.get(0).add(prime.get(i));
-						listNotAnagram.get(1).add(prime.get(j));
+						//listNotAnagram.get(1).add(prime.get(j));
 					}
 				}
 			}
@@ -835,15 +851,15 @@ public class Util
 				}
 				System.out.println();
 			}
-			System.out.println("Prime And Not Anagrams:");
+/*			System.out.println("Prime And Not Anagrams:");
 			for (i = 0; i <2; i++) 
 			{
-				for (j = 0; j <listNotAnagram.get(i).size() ; j++) 
+				for (j = 0; j <listNotAnagram.get(0).size() ; j++) 
 				{
-					System.out.print(listNotAnagram.get(i).get(j)+" ");
+					System.out.print(listNotAnagram.get(0).get(j)+" ");
 				}
 				System.out.println();
-			}
+			}*/
 		}
 		public static void primeAnagramStack(int low, int high) throws Exception 
 		{
@@ -871,19 +887,19 @@ public class Util
 					j++;
 				}
 			}
-			for (int i = stack.size()-1; i >=0; i -= 2) 
+			for (int i = stack.size()-1; i >=0; i -=2) 
 			{
 				System.out.println(stack.pop() + " " + stack.pop());
 			}
 			
-			System.out.println("stack size " + stack.size());
+			
 			int i = 0;
 			/*while(!stack.isStackEmpty())
 			{
 				System.out.println(stack.pop() + " " + stack.pop());
 				i+=2;
 			}*/
-			System.out.println("stcka size: " + i);
+		
 		}
 		public static void primeAnagramQueue(int low, int high)
 		{
@@ -897,7 +913,7 @@ public class Util
 					prime.add(Integer.toString(j));
 				}
 			}
-			for (int i = 0; i < prime.size() - 1; i++) 
+			for (int i = 0; i < prime.size(); i++) 
 			{
 				int j = i + 1;
 				while (j < prime.size()) 
@@ -911,12 +927,138 @@ public class Util
 					j++;
 				}
 			}
-			for (int i =0 ; i<queue.size(); i += 2) 
+		/*	for (int i =0 ; i<=queue.size(); i+=2) 
 			{
 				System.out.println(queue.deQueue() + " " + queue.deQueue());
+			}*/
+			int i=0;
+			while(!queue.isEmpty())
+			{
+				System.out.println(queue.deQueue() + " " + queue.deQueue());
+				i+=2;
+			}	
+		}
+		public static void dispCalender(int month, int year)
+		{
+			// TODO Auto-generated method stub
+			ArrayList<ArrayList<String>> date = new ArrayList<ArrayList<String>>();
+			
+			for (int i = 0; i < 6; i++) 
+			{
+				date.add(new ArrayList<String>());
 			}
+			// leave empty so that months[1] = "January"
+		       String[] months = {"",                              
+			           "January", "February", "March",
+			           "April", "May", "June",
+			           "July", "August", "September",
+			           "October", "November", "December"
+			       		};
+		       
+		       // days[i] = days in month i
+		       int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+		       // check for leap year
+		       if (month == 2 && Util.LeapYear(year)) 
+		    	   days[month] = 29;
+
+		       System.out.println("   "+months[month]+" "+ year);
+		       String dayOfWeek[] = {"S "," M "," T "," W "," T "," F "," S"};
+		       for (int i = 0; i < dayOfWeek.length; i++)
+		       {
+		    	   System.out.print(" "+dayOfWeek[i]);
+		       }
+		       System.out.println();
+		       // starting day
+		       int day = 1 ;
+		       int d = Util.weekDay(day,month, year);
+		       int space = 0;
+		       // print the calendar
+		       for (int i = 0; i < 6; i++)
+		       {
+					if (i == 0) 
+					{
+						for (int j = 0; j < 7; j++) 
+						{
+							if (j < d) 
+							{
+								date.get(i).add("   ");
+							}
+							else 
+							{
+								date.get(i).add(" "+Integer.toString(day)+" ");
+								day++;
+									
+							}
+						}
+					}
+					else 
+					{
+						for (int j = 0; j < 7; j++)
+						{
+							if(day<=days[month])
+							{
+								if (space < day + 9)
+								{
+									date.get(i).add(" "+Integer.toString(day)+" ");
+									day++;
+									space++;
+								}
+								else
+								{
+									date.get(i).add(Integer.toString(day));
+									day++;
+								}
+							}
+						}
+					}
+				}
+				
+				for (int i = 0; i < date.size(); i++) 
+				{
+					for (int j= 0; j < date.get(i).size(); j++) 
+					{
+						if (space < day + 9)
+						{
+							System.out.print(" "+date.get(i).get(j));
+							space++;
+						} 
+						else 
+						{ 
+						
+							System.out.print(date.get(i).get(j));
+						}
+					}
+					System.out.println();
+				}
 			
 		}
+		public static void dispQueueCalender(int month, int year) 
+		{
+			// TODO Auto-generated method stub
+			Queue<Queue<String>> week = new Queue<Queue<String>>(7);
+			
+			for (int i = 0; i < 7; i++) 
+			{
+				week.enQueue(new Queue<String>(7));
+			}
+			// leave empty so that months[1] = "January"
+		    String[] months = {"",                              
+			           "January", "February", "March",
+			           "April", "May", "June",
+			           "July", "August", "September",
+			           "October", "November", "December"
+			       		};
+		       
+		       // days[i] = days in month i
+		    int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+		       // check for leap year
+		    if (month == 2 && Util.LeapYear(year)) 
+		    	days[month] = 29;
+
+		    System.out.println("   "+months[month]+" "+ year);
+		}    
 }
 	
 		/*public static void orderedList() throws IOException
