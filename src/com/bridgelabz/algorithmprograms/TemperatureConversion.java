@@ -1,24 +1,23 @@
 package com.bridgelabz.algorithmprograms;
 
-import java.util.Scanner;
 
 import com.bridgelabz.utility.Util;
 
 public class TemperatureConversion
 {
-	static double celTemp,tempFah;
+	static double Celcius_Temp,Fah_Temp;
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
+
 		System.out.println("Enter Temp.in Celcius: ");
-		celTemp = sc.nextDouble();
+		Celcius_Temp = Util.scanner.nextDouble();
 		System.out.println("Enter Temp.in fahrenheit: ");
-		tempFah = sc.nextDouble();
-		double F = Util.celToFah(celTemp);
-		System.out.println("celToFah: "+celTemp+" celcius = "+F+" fahrenheit");
-		double C = Util.fahToCal(tempFah);
-		System.out.println("celToFah: "+tempFah+" fahrenheit = "+C+" celcius");
+		Fah_Temp = Util.scanner.nextDouble();
+		double fahrehneit = Util.celToFah(Celcius_Temp);
+		System.out.println("celToFah: "+Celcius_Temp+" celcius = "+fahrehneit+" fahrenheit");
+		double celcius = Util.fahToCal(Fah_Temp);
+		System.out.println("celToFah: "+Fah_Temp+" fahrenheit = "+celcius+" celcius");
 	}
 	
 }

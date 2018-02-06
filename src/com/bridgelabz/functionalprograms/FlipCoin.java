@@ -1,15 +1,13 @@
 package com.bridgelabz.functionalprograms;
-
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class FlipCoin
 {
 	static int Number_Times,Number_Heads,Number_Tails;	
 	public static void main(String[] arg)
 	{
-		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter a number to flip a coin that number times:");
-		Number_Times = scanner.nextInt();
+		Number_Times = Util.scanner.nextInt();
 		int i;
 		if(Number_Times>0)
 		{

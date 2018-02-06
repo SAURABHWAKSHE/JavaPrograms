@@ -1,19 +1,15 @@
 package com.bridgelabz.algorithmprograms;
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class VendingMachine 
 {
-
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter The Amount That You Want To WithDraw:");
 		int WithDraw ;
-		int withDraw = sc.nextInt();
+		int withDraw = Util.scanner.nextInt();
 		toChange(withDraw);
-		
-
 	}
 	public static void toChange(int aMount)
 	{

@@ -1,8 +1,5 @@
 package com.bridgelabz.algorithmprograms;
 
-
-import java.util.Scanner;
-
 import com.bridgelabz.utility.Util;
 
 public class PrimeNumber
@@ -10,11 +7,10 @@ public class PrimeNumber
     public static void main(String args[])
     {
          int low, high,i,j,yCount=0;
-         Scanner scanner = new Scanner(System.in);
          System.out.println ("Enter the lower Number :"); 
-         low = scanner.nextInt();
+         low = Util.scanner.nextInt();
          System.out.println ("Enter the higher Number :"); 
-         high = scanner.nextInt();
+         high = Util.scanner.nextInt();
          int prime[] =Util.checkPrime(low,high);
          int dupPrime[] = new int[prime.length];
     	 for(i=0;i<prime.length;i++)

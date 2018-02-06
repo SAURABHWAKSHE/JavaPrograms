@@ -1,5 +1,4 @@
 package com.bridgelabz.algorithmprograms;
-import java.util.Scanner;
 
 import com.bridgelabz.utility.Util;
 
@@ -7,24 +6,20 @@ public class Anagram
 {
 	public static void main(String[]arg)
 	{
-		Scanner scanner = new Scanner(System.in);
 		System.out.print("Enter The First Strings:");
-		String str,str1,newStr,newStr1;
-		str = (scanner.nextLine().toLowerCase());
-		newStr = str.replaceAll("\\s", "");
+		String string,string1,newString,newString1;
+		string = (Util.scanner.nextLine().toLowerCase());
+		newString = string.replaceAll("\\s", "");
 		System.out.print("Enter The Second Strings:");
-		str1 = (scanner.nextLine().toLowerCase());
-		newStr1 = str1.replaceAll("\\s", "");
+		string1 = (Util.scanner.nextLine().toLowerCase());
+		newString1 = string1.replaceAll("\\s", "");
 		//System.out.println("Final String Are:"+newStr+" And "+newStr1);
 		
-		if(Util.isAnagram(newStr,newStr1))
+		if(Util.isAnagram(newString,newString1))
 			System.out.print("Result:The Strings are Anagram");
 		else
 			System.out.print("Result:The Strings are Not Anagram");
 	}
-
-	
-	
 }
 		/*static void isAnagram(String str,String str1)
 		{

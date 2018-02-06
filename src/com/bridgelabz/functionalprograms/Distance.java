@@ -7,12 +7,12 @@ public class Distance
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		int x,y;
-		double d;
-		x = Integer.parseInt(args[0]);
-		y = Integer.parseInt(args[1]);
-		d= Math.sqrt(x*x+y*y);
-		System.out.println("Euclidean Distance = "+d+" units.");
+		int xparam,yparam;
+		double distance;
+		xparam = Integer.parseInt(args[0]);
+		yparam = Integer.parseInt(args[1]);
+		distance= Math.sqrt(xparam*xparam+yparam*yparam);
+		System.out.println("Euclidean Distance = "+distance+" units.");
 	}
 
 }

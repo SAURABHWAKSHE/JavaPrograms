@@ -1,17 +1,13 @@
 package com.bridgelabz.functionalprograms;
-import java.util.Scanner;
-
 import com.bridgelabz.utility.Util;
 
 public class LeapYear 
 {
-
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter The Year:");
-		int lYear = sc.nextInt();
+		int lYear = Util.scanner.nextInt();
 		boolean islYear=false;
 		if(Integer.toString(lYear).length()==4)
 		{

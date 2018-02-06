@@ -1,23 +1,22 @@
 package com.bridgelabz.functionalprograms;
-
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class HarmonicNum
 {
-	static int n;
+	static int Harmonic_Number;
 	
 	public static void main(String[]arg)
 	{
-		Scanner scv = new Scanner(System.in);
-		System.out.println("Enter The Value of N:");
-		n = scv.nextInt();
+
+		System.out.println("Enter The Value of Harmonic Number:");
+		Harmonic_Number = Util.scanner.nextInt();
 		int i;
-		double sum=0;
-		if(n>0)
+		double sumTotal=0;
+		if(Harmonic_Number>0)
 		{
-			for(i=1;i<=n;i++)
+			for(i=1;i<=Harmonic_Number;i++)
 			{
-				sum = sum + Math.pow(i,-1);
+				sumTotal = sumTotal + Math.pow(i,-1);
 			}
 		}
 		else
@@ -25,6 +24,6 @@ public class HarmonicNum
 			System.out.println("Please Enter Value of N greater than 0 ");
 			System.exit(0);
 		}
-		System.out.println(n+"th Harmonic Value = "+sum);
+		System.out.println(Harmonic_Number+"th Harmonic Value = "+sumTotal);
 	}
 }

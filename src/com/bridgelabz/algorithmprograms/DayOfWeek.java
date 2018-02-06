@@ -4,16 +4,16 @@ import com.bridgelabz.utility.Util;;
 
 public class DayOfWeek  
 {
-	static int dDay,mMonth,yYear;
+	
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		//System.out.println("Enter Day,Month And Year: ");
+		int dDay,mMonth,yYear;
 		dDay   = Integer.parseInt(args[0]);
 		mMonth = Integer.parseInt(args[1]);
 		yYear  = Integer.parseInt(args[2]);
-		int res = Util.weekDay(dDay,mMonth,yYear);
-		switch(res)
+		int result = Util.weekDay(dDay,mMonth,yYear);
+		switch(result)
 		{
 			case 0: System.out.println("On "+dDay+"/"+mMonth+"/"+yYear+" There is Sunday.");
 					break;

@@ -9,20 +9,19 @@ public class BubbleSort
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter The Array Size:");
-		int n,i,j;
-		n = sc.nextInt();
-		int [] aArr = new int [n];
+		int arrSize,i,j;
+		arrSize = Util.scanner.nextInt();
+		int [] aArray = new int [arrSize];
 		System.out.println("Enter The Array Elements:");
-		for(i = 0;i<n;i++)
+		for(i = 0;i<arrSize;i++)
 		{
-			aArr[i] = sc.nextInt();
+			aArray[i] = Util.scanner.nextInt();
 		}
-		int [] aArrSorted = Util.bubbleSort(aArr,n);
+		int [] aArrSorted = Util.bubbleSortInt(aArray);
 		
 		System.out.println("Sorted Array:");
-		for(i = 0;i<n;i++)
+		for(i = 0;i<arrSize;i++)
 		{
 			System.out.print(aArrSorted[i]+" ");
 		}

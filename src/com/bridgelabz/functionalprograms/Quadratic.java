@@ -1,6 +1,6 @@
 package com.bridgelabz.functionalprograms;
 
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class Quadratic
 {
@@ -8,22 +8,21 @@ public class Quadratic
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter The value For a,b and c:");
-		int a,b,c;
-		a = sc.nextInt();
-		b = sc.nextInt();
-		c = sc.nextInt();
+		int paramA,paramB,paramC;
+		paramA = Util.scanner.nextInt();
+		paramB = Util.scanner.nextInt();
+		paramC = Util.scanner.nextInt();
 		double root1,root2,delta;
 		
-		System.out.println("Given Eq. Is: "+a+"*x^2+"+b+"*x+"+c);
-		delta = b*b-4*a*c;
+		System.out.println("Given Eq. Is: "+paramA+"*x^2+"+paramB+"*x+"+paramC);
+		delta = paramB*paramB-4*paramA*paramC;
 		System.out.println("DElta:"+delta);
 		if(delta>0)
 		{
 			System.out.println(" Roots are real and unequal");
-			root1=(-b+Math.sqrt(delta)/2*a);
-			root2=(-b-Math.sqrt(delta)/2*a);
+			root1=(-paramB+Math.sqrt(delta)/2*paramA);
+			root2=(-paramB-Math.sqrt(delta)/2*paramA);
 
 			System.out.println(" First root is : " +root1);
 			System.out.println(" Second root is : " +root2);
@@ -31,7 +30,7 @@ public class Quadratic
 		else if (delta==0) 
 		{
 			System.out.println("Roots are real and equal");
-			root1=(-b+Math.sqrt(delta)/2*a);
+			root1=(-paramB+Math.sqrt(delta)/2*paramA);
 			
 			System.out.println("Root =" + root1);
 		}

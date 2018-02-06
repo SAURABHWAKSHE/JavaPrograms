@@ -1,6 +1,6 @@
 package com.bridgelabz.functionalprograms;
 import java.util.Arrays;
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class CouponNumber 
 {
@@ -8,19 +8,18 @@ public class CouponNumber
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter How Many Coupon Numbers You Want To Generate: ");
-		Number_Times = scanner.nextInt();
+		Number_Times = Util.scanner.nextInt();
 		System.out.println("Enter range to generate Random Number:");
-		Number_Random = scanner.nextInt();
-		randInt(Number_Times,Number_Random);	
+		Number_Random = Util.scanner.nextInt();
+		randNumber(Number_Times,Number_Random);	
 	}
 	
-	public static boolean contains(int[] arr, int item)
+	public static boolean contains(int[] array, int item)
 	{
-		for (int n : arr)
+		for (int number : array)
 		{
-			if (item == n) 
+			if (item == number) 
 			{
 				return true;
 			}
@@ -29,7 +28,7 @@ public class CouponNumber
 	}     
 	
 
-	public static void randInt(int Number_Times,int Number_Random)
+	public static void randNumber(int Number_Times,int Number_Random)
 	{
 		int i,count=0,distinct=0;
 		double random;
@@ -50,8 +49,8 @@ public class CouponNumber
 				dDistinct[distinct++] = (int)random;
 				
 			}
-			if(distinct == Number_Times)
-				break;
+			/*if(distinct == Number_Times)
+				break;*/
 		}
 		
 		System.out.println("we need to generate "+count+" random numbers to print "+Number_Times+" distinct Coupon Numbers.");

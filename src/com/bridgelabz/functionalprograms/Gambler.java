@@ -1,6 +1,6 @@
 package com.bridgelabz.functionalprograms;
 
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class Gambler
 {
@@ -8,18 +8,18 @@ public class Gambler
 	  static int Bet_Amount;
 	  public static void main(String args[])
 	  {
-		   Scanner sc = new Scanner(System.in);
+		 
 		   double sTake,goalTarget;
 		   int bet=0;
 		   System.out.println("Enter Usr Inputs:");
 		   System.out.println("Enter The Amount That You Are HAving Intially To Play:");
-		   sTake = sc.nextDouble();
+		   sTake = Util.scanner.nextDouble();
 		   System.out.println("Enter How Many Times You Want to  bet:");
-		   bet= sc.nextInt();
+		   bet= Util.scanner.nextInt();
 		   System.out.println("Enter The Max Amount That You Want To Reach By Wining:");
-		   goalTarget = sc.nextDouble();
+		   goalTarget = Util.scanner.nextDouble();
 		   System.out.println("Enter The Amount For Each bet And Win: ");
-		   Bet_Amount = sc.nextInt();
+		   Bet_Amount = Util.scanner.nextInt();
 		   betTrials(sTake,bet,goalTarget);
 	  }
 	  public static void betTrials(double sTake2,double bet2,double goalTarget2)

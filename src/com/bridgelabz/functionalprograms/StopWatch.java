@@ -1,26 +1,23 @@
 package com.bridgelabz.functionalprograms;
-
-
-class StopWatch 
+public class StopWatch 
 {
-	private static long start,eTime,end;
+	private static long Start_Time,End_Time,Elapsed_Time;
 	public static void elapsedTime()
 	{
-		int i,itr=100000;
-		for(i=1;i<=itr;i++)
+		int i,itrate=100000;
+		for(i=1;i<=itrate;i++)
 		{
 		StopWatch s = new StopWatch();
 		}
-		end = System.currentTimeMillis();
-		System.out.println("End time:"+end+" milliseconds");
-		eTime = (end - start);
-		System.out.println("elapse time:"+eTime+" milliseconds");
+		End_Time = System.currentTimeMillis();
+		System.out.println("End time:"+End_Time+" milliseconds");
+		Elapsed_Time = (End_Time - Start_Time);
+		System.out.println("elapse time:"+Elapsed_Time+" milliseconds");
 	}
 	public static void main(String args[])
 	{
-		
-		start = System.currentTimeMillis();
-		System.out.println("start time:"+start+" milliseconds");
+		Start_Time = System.currentTimeMillis();
+		System.out.println("start time:"+Start_Time+" milliseconds");
 		elapsedTime();
 	}
 } 

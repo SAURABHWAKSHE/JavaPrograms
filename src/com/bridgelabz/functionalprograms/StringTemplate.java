@@ -1,24 +1,26 @@
 package com.bridgelabz.functionalprograms;
-import java.util.Scanner;
+
+import com.bridgelabz.utility.Util;
+
 public class StringTemplate 
 {
 
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		Scanner scanner = new Scanner(System.in);
-		String str = "Hello <<username>>,How are you?";
-		System.out.println(str);
+	
+		String ipstring = "Hello <<username>>,How are you?";
+		System.out.println(ipstring);
 		System.out.print("Which word do you want to replace from String:");
-		String st1 = scanner.next();
+		String toreplace= Util.scanner.next();
 		System.out.println();
 		System.out.print("What do you want to replace with that word:");
-		String st2 = scanner.next();
+		String byreplace = Util.scanner.next();
 		System.out.println();
-		if(st2.length()>3)
+		if(byreplace.length()>3)
 		{
-			str = str.replace(st1, st2);
-			System.out.println(str);
+			ipstring = ipstring.replace(toreplace,byreplace);
+			System.out.println(ipstring);
 		}
 		else
 		{

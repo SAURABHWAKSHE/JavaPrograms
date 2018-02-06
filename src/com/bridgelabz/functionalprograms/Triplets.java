@@ -1,34 +1,30 @@
 package com.bridgelabz.functionalprograms;
-
-
-import java.util.Scanner;
+import com.bridgelabz.utility.Util;
 
 public class Triplets  
 {
-	
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		int n;
+		
 		System.out.println("Enter The Value Of N:");
-		n = sc.nextInt();
+		int arraySize = Util.scanner.nextInt();
 		int i,sum=0,j,k;
 		int count = 0;
-		int arr[] = new int[n];
+		int tripletArray[] = new int[arraySize];
 		System.out.println("Enter Array ELements:");
-		for(i=0 ;i<n;i++)
+		for(i=0 ;i<arraySize;i++)
 		{
-			arr[i] = sc.nextInt();
+			tripletArray[i] = Util.scanner.nextInt();
 		}
 		System.out.println("Distinct Triplets:");
-		for(i=0 ;i<n;i++)
+		for(i=0 ;i<arraySize;i++)
 		{
-			for(j=i+1;j<n;j++)
+			for(j=i+1;j<arraySize;j++)
 			{
-				for(k=j+1 ;k<n;k++)
+				for(k=j+1 ;k<arraySize;k++)
 				{
-					sum = arr[i]+arr[j]+arr[k];
+					sum = tripletArray[i]+tripletArray[j]+tripletArray[k];
 					if(sum==0)
 					{
 						System.out.println("("+i+","+j+","+k+")");
@@ -38,7 +34,7 @@ public class Triplets
 			}
 		
 		}
-		System.out.println("Number Of Distinct Triplets:"+count);
+		System.out.println("Total Number Of Distinct Triplets Generated:"+count);
 
 	}
 
