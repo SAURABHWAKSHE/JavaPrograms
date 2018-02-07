@@ -1,74 +1,65 @@
-package com.bridgelabz.utility; 
+package com.bridgelabz.utility;
 
-class Stack
+import java.util.NoSuchElementException;
+
+public class Stack<T>
 {
-    static int size ;
-    static int top;
-    static int stack[];
- 
-   
-    Stack(int size)
+	private Node<T> top = null;
+	private int size=0;
+    /*
+    * Helper Class for Stack.
+    */
+    private static class Node<T> 
     {
-        top = -1;
-        this.stack = new int[size];
-    }
- 
-    public static boolean push(int x)
-    {
-        if (top >= size)
+        private T data;
+        private Node<T> next = null;
+
+        Node(T element) 
         {
-            System.out.println("Stack Overflow");
-            return false;
-        }
-        else
-        {
-            stack[++top] = x;
-            return true;
+            data = element;
         }
     }
- 
-    public static int pop()
+    public void push(T element)
     {
-        if (top < 0)
+        Node<T> newItem = new Node<T>(element);
+
+        if (top == null) 
         {
-            System.out.println("Stack Underflow");
-            return 0;
-        }
-        else
+            top = newItem;
+        } else 
         {
-            int x = stack[top--];
-            return x;
+            // New Top
+            newItem.next = top;
+            top = newItem;
         }
+        size++;
     }
-    public static int peek()
+    public T pop() 
     {
-		return stack[top];
-    	
+        if (top == null) 
+        {
+            throw new NoSuchElementException("The stack is empty.");
+        }
+
+        T output = top.data;
+        top = top.next;
+        size--;
+        return output;
     }
-    
-    public static boolean isEmpty()
+    public T peek() 
     {
-        return (top < 0);
+        if (top == null) 
+        {
+            throw new NoSuchElementException("The stack is empty.");
+        }
+        return top.data;
     }
-    
-    public static boolean isFull()
+    public boolean isEmpty() 
     {
-    	return (top == size-1);
+        return top == null;
     }
-    
-}
- 
-// Driver code
-class Main
-{
-    public static void main(String args[])
+    public int size()
     {
-    	System.out.println("Enter Stack size:");
-    	int size = Util.scanner.nextInt();
-        Stack s = new Stack(size);
-        s.push(10);
-        s.push(20);
-        s.push(30);
-        System.out.println(s.pop() + " Popped from stack");
+		return size;
     }
 }

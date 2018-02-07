@@ -2,7 +2,6 @@ package com.bridgelabz.utility;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
 class Node<T>
 {
     protected T data;
@@ -16,15 +15,11 @@ class Node<T>
 }
 public class LinkedList<T> 
 {
-    static int el=0;
-    protected Node head;
-       
+    protected Node head;  
     public LinkedList()
     {
         head = null;
     }
-   
-    //@SuppressWarnings("unchecked")
     public <T> void insertData(T data)
     {
         if(head==null) 
@@ -41,7 +36,7 @@ public class LinkedList<T>
             temp.next=new Node(data);
         }
     }
-   @SuppressWarnings({ "rawtypes", "unchecked" })
+ /*  @SuppressWarnings({ "rawtypes", "unchecked" })
     public void PrintLinkNode(Queue link) 
     {
         Node temp=head;
@@ -59,7 +54,7 @@ public class LinkedList<T>
         	myobj.insertData(temp.data);
             temp=temp.next;
         }
-    }
+    }*/
     public void dispNode() 
     {
     	Node temp=head;
@@ -69,7 +64,7 @@ public class LinkedList<T>
             temp=temp.next;
         }
     }
-    public int[] StorePrintLinkNode() 
+    /*public int[] StorePrintLinkNode() 
     {
         int MyArray[] = new int[100];
         int i=0;
@@ -80,21 +75,21 @@ public class LinkedList<T>
             temp=temp.next;
         }
         return MyArray;
-    }
+    }*/
     public boolean search(T data) 
     {
-    	 boolean flag=false;
-         Node temp = head;
-         while(temp!=null) 
-         {
-            if(temp.data==data) 
-            {
-                 flag = true;
-                 break;
-            }
-            temp=temp.next;
-         }
-         return flag;
+    	boolean flag = false;
+	    Node temp =head;
+	    while(temp.next!=null)
+	    {
+			if(temp.data.equals(data))
+			{
+				flag=true;
+				break;
+			}
+	    	temp = temp.next;
+	    }
+	    return flag;    
     }
     
     public void remove(T data)  
@@ -118,7 +113,7 @@ public class LinkedList<T>
             }
         }
     }
-	/**
+	/*
 	 * @param To write a each num in the file.
 	 * @return
 	 * @throws IOException
@@ -177,13 +172,13 @@ public class LinkedList<T>
 			}
 			prev.next=temp.next;
 			temp=null;
-		}
+		}char
 		
 	}*/
 
 	public void InsertRightPosition(String num) 
 	{
-		// TODO Auto-generated method stub
+		//TODO Auto-generated method stub
 		//int val = (int) head.data;
 		if(num.compareTo((String)head.data)<0) {
 			
@@ -197,7 +192,7 @@ public class LinkedList<T>
 			Node temp=head.next;
 			while(temp!=null) {
 				
-				if(num.compareTo((String)head.data)>0) {
+				if(num.compareTo((String)head.data)<0) {
 			
 					prev=temp;
 					temp=temp.next;
@@ -211,12 +206,14 @@ public class LinkedList<T>
 					break;
 				}
 			}
-			if(flag) {
+			if(flag) 
+			{
 				Node temp1 = head;
-				while(temp1.next!=null) {
+				while(temp1.next!=null)
+				{
 					temp1 = temp1.next;
 				}
-				temp1.next =new Node(num); 
+				temp1.next = new Node(num); 
 			}
 		}
 	}

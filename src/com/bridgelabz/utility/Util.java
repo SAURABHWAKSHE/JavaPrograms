@@ -624,57 +624,56 @@ public class Util
 	  * sort and then add to file that is updated 
 	  * @param str
 	  * @throws IOException
-	*/
+	 */
 	 public static void unorderedList(String str) throws IOException 
-		{
+	 {
 			// TODO Auto-generated method stub
 			int i;
-			BufferedReader bfr=new BufferedReader(new FileReader(str));
+			BufferedReader bfr = new BufferedReader(new FileReader(str));
 
 			String reader;
 			reader=bfr.readLine().toLowerCase();
 			bfr.close();
 			String data[]=reader.split(" ");
 			String[] array = bubbleSortString(data);
-			//
 			for(i=0;i<array.length;i++)
 			{
+				System.out.print(array[i]+" ");
+				System.out.println();
 				list.insertData(array[i]);
 			}
-			searchWord(array);
-		}
+			searchWord();
+	 }
 	 	/*
 	 	 * search for word from file 
 	 	 * @param array1
 	 	 */
-	 	private static void searchWord(String []array1) throws IOException 
+	 	private static void searchWord() throws IOException 
 		{
+	 		boolean value =false;
 			char character = ' ';
 			do
 			{
 				System.out.println("Enter a Word That You Want To Find:");
-				String word = Util.scanner.next(); 
-				
-				if(list.search(word))
+				String num = Util.scanner.next().toLowerCase(); 
+				value=list.search(num);
+				if(value)
 				{
 					System.out.println("String is already there in List.");
-					list.remove(word);
+					list.remove(num);
 					System.out.println("so removed From List.");
 				}
 				else
 				{
 					System.out.println("String is not there in List.");
 					//list.insertData(word);
-					list.InsertRightPosition(word);
+					list.InsertRightPosition(num);
 					System.out.println("Added To The List.");
-					//appendlist(array1,word);
 				}
-				
 				System.out.println("Do you want to find another word:");
 				character = Util.scanner.next().charAt(0);
 			}
 			while(character =='Y'||character =='y');
-			
 			list.dispNode();
 			addToFile();
 				//System.out.println("List Content:");
@@ -686,7 +685,7 @@ public class Util
 	 	 * @param array
 	 	 * @param word
 	 	 */
-		public static void appendlist(String[] array, String word){
+	/*	public static void appendlist(String[] array, String word){
 			String newArray[] = new String[array.length+1];
 			for (int i = 0; i < newArray.length-1; i++) {
 				newArray[i]=array[i];
@@ -696,32 +695,31 @@ public class Util
 			for (int i = 0; i < sortList.length; i++) {
 				System.out.print(sortList[i]+" ");
 			}
-		}
+		}*/
 		/*
 		 * writes data to the file
 		 * @throws Exception
 		 */
 		private static void addToFile() throws IOException 
 		{
-		    FileWriter fr =null;
-	        FileWriter fr1 =null;
-	        try
-	        {   
-	        	File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/File.txt");
+			  FileWriter fr =null;
+		      FileWriter fr1 =null;
+		    try 
+		    {
+		        File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/Order.txt");
 		        fr = new FileWriter(writeFile);
 		        fr1 = list.writeListNode(fr);
-		        System.out.println("Data added in file :");
-	        }
-	        catch(Exception e) 
-	        {
-	        	e.printStackTrace();
-	        }
-	        finally 
-	        {
+		        System.out.println("updated list successfully added in file :");    
+		    }
+		    catch(Exception e) 
+		    {
+		        e.printStackTrace();
+		    }
+		    finally 
+		    {
 		        fr.close();
 		        fr1.close();
 		    }
-			
 		}
 		/*
 		 * enqueues and dequeues people from queue
@@ -731,7 +729,7 @@ public class Util
 		public static <T> void cashCounter(int initCash, int numPeople)
 		{
 			// TODO Auto-generated method stub
-			Queue <T> queue = new Queue<T>(numPeople*3);
+			GenericQueue <T> queue = new GenericQueue<T>(numPeople*3);
 			int i;
 			int balanceAmount = initCash;
 			//T  balance ;
@@ -817,7 +815,7 @@ public class Util
 		public static void isPalindrome(String string) 
 		{
 			// TODO Auto-generated method stub
-			Queue <Character> queue = new Queue<Character>(string.length()); 
+			Queue <Character> queue = new Queue<Character>(); 
 			char [] characters = string.toCharArray();
 			int count=0 ,i=0;
 			for(i=0;i<characters.length;i++)
@@ -962,7 +960,7 @@ public class Util
 		public static void primeAnagramStack(int low, int high) throws Exception 
 		{
 			// TODO Auto-generated method stub
-			GenericStack<String> stack = new GenericStack<String>(2);
+			Stack<String> stack = new Stack<String>();
 			ArrayList<String> prime = new ArrayList<String>();
 			for (int j = low; j <= high; j++) 
 			{
@@ -989,15 +987,12 @@ public class Util
 			{
 				System.out.println(stack.pop() + " " + stack.pop());
 			}
-			
-			
-			int i = 0;
-			/*while(!stack.isStackEmpty())
+			/*int i = 0;
+			while(!stack.isStackEmpty())
 			{
 				System.out.println(stack.pop() + " " + stack.pop());
 				i+=2;
 			}*/
-		
 		}
 		/*
 		 * print prime anagrams using Queue.
@@ -1008,7 +1003,7 @@ public class Util
 		public static void primeAnagramQueue(int low, int high)
 		{
 			// TODO Auto-generated method stub
-			Queue<String> queue = new Queue<String>(400);
+			Queue<String> queue = new Queue<String>();
 			ArrayList<String> prime = new ArrayList<String>();
 			for (int j = low; j <= high; j++) 
 			{
@@ -1036,10 +1031,11 @@ public class Util
 				System.out.println(queue.deQueue() + " " + queue.deQueue());
 			}*/
 			int i=0;
-			while(!queue.isEmpty())
+			while(true)
 			{
-				System.out.println(queue.deQueue() + " " + queue.deQueue());
-				i+=2;
+				if(!queue.isEmpty())
+					System.out.println(queue.deQueue() + " " + queue.deQueue());
+				//i+=2;
 			}	
 		}
 		/*
@@ -1145,11 +1141,11 @@ public class Util
 		public static void dispQueueCalender(int month, int year) 
 		{
 			// TODO Auto-generated method stub
-			Queue<Queue<String>> week = new Queue<Queue<String>>(7);
+			GenericQueue<GenericQueue<String>> week = new GenericQueue<GenericQueue<String>>(7);
 			
 			for (int i = 0; i < 7; i++) 
 			{
-				week.enQueue(new Queue<String>(7));
+				week.enQueue(new GenericQueue<String>(7));
 			}
 			// leave empty so that months[1] = "January"
 		    String[] months = {"",                              
@@ -1167,6 +1163,15 @@ public class Util
 		    	days[month] = 29;
 
 		    System.out.println("   "+months[month]+" "+ year);
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
 		}
 		/*
 		 * Display Integer and other Two d Arrays.
