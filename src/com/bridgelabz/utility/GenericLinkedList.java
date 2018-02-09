@@ -13,10 +13,10 @@ class Node<T>
 	    next = null;
 	}
 }
-public class LinkedList<T> 
+public class GenericLinkedList<T> 
 {
     protected Node head;  
-    public LinkedList()
+    public GenericLinkedList()
     {
         head = null;
     }
@@ -76,22 +76,22 @@ public class LinkedList<T>
         }
         return MyArray;
     }*/
-    public boolean search(T data) 
-    {
-    	boolean flag = false;
-	    Node temp =head;
-	    while(temp.next!=null)
-	    {
-			if(temp.data.equals(data))
-			{
-				flag=true;
-				break;
-			}
-	    	temp = temp.next;
-	    }
-	    return flag;    
-    }
-    
+	 public boolean search(T data) 
+	 {
+	        
+	        boolean flag=false;
+	        Node temp = head;
+	        while(temp!=null) 
+	        {
+	            if(temp.data.equals(data)) 
+	            {
+	                flag = true;
+	                break;
+	            }
+	            temp=temp.next;
+	        }
+	        return flag;
+	 }
     public void remove(T data)  
     {
         if(head.data.equals(data))
@@ -138,44 +138,6 @@ public class LinkedList<T>
         }
         return br;
 	}
-
-	/*public int search(char num) {
-		// TODO Auto-generated method stub
-		int count=0;
-        Node temp = head;
-            while(temp!=null) {
-                if(temp.data.equals(num)){
-                   count++;
-                }   
-                temp = temp.next;
-            }
-        return count; 
-
-	*/
-
-	/*public void remove(char num)
-	{
-		// TODO Auto-generated method stub
-		if(head.data.equals(num))
-		{
-			
-			head = head.next;
-			
-		}
-		else
-		{
-			Node prev=null;
-			Node temp = head.next;
-			while(!temp.data.equals(num)){
-				prev =temp;
-				temp = temp.next;
-			}
-			prev.next=temp.next;
-			temp=null;
-		}char
-		
-	}*/
-
 	public void InsertRightPosition(String num) 
 	{
 		//TODO Auto-generated method stub

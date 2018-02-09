@@ -21,28 +21,3 @@ public class Anagram
 			System.out.print("Result:The Strings are Not Anagram");
 	}
 }
-		/*static void isAnagram(String str,String str1)
-		{
-			String s1 = str.replace("\\s","");
-			String s2 = str1.replace("\\s","");
-			int x,y;
-			x = s1.length();
-			y = s2.length();
-			if(x!=y)
-				status = false;
-			else
-			{
-				char[]arr = s1.toCharArray();
-				char[]arr1 = s2.toCharArray();
-				Arrays.sort(arr);
-				Arrays.sort(arr1);
-				status = Arrays.equals(arr,arr1);
-			}
-				
-			if(status)
-				System.out.print("The Strings are Anagram");
-			else
-				System.out.print("The Strings are not Anagram");
-				
-		}*/
-

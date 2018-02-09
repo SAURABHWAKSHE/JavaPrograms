@@ -17,23 +17,7 @@ public class Triplets
 		{
 			tripletArray[i] = Util.scanner.nextInt();
 		}
-		System.out.println("Distinct Triplets:");
-		for(i=0 ;i<arraySize;i++)
-		{
-			for(j=i+1;j<arraySize;j++)
-			{
-				for(k=j+1 ;k<arraySize;k++)
-				{
-					sum = tripletArray[i]+tripletArray[j]+tripletArray[k];
-					if(sum==0)
-					{
-						System.out.println("("+i+","+j+","+k+")");
-						count++;
-					}
-				}
-			}
-		
-		}
+		count = Util.triplets(tripletArray);
 		System.out.println("Total Number Of Distinct Triplets Generated:"+count);
 
 	}

@@ -47,8 +47,8 @@ public class PrimeNumber
         		
         			 if(Util.isAnagram(str,str1))
         			 {
-        				 System.out.print(str+"  "+str1);
-        				 System.out.println();
+        				 System.out.print(str+"  "+str1+" ");
+        				 
         			 }
         			 	 
         	  }

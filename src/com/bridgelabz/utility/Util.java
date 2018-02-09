@@ -1,7 +1,9 @@
 package com.bridgelabz.utility;
 
-import com.bridgelabz.utility.LinkedList;
+import com.bridgelabz.dsprograms.year;
+import com.bridgelabz.utility.GenericLinkedList;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -16,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,10 +36,11 @@ public class Util
 	static double endTime;
 	static double elapsedTime=0;
 	static double eTime[] = new double[6];
-	static LinkedList <String> list= new LinkedList<String>(); 
-	static LinkedList <Integer> integerList= new LinkedList<Integer>(); 
+	static LinkedList <Integer> linkList = new LinkedList<Integer>();
+	static GenericLinkedList <String> list= new GenericLinkedList<String>(); 
+	static GenericLinkedList <Integer> integerList= new GenericLinkedList<Integer>(); 
 	static HashMap <Integer,LinkedList<Integer>> hashMap = new HashMap<Integer,LinkedList<Integer>>(); 
-	
+	static char [][] playBoard = new char [3][3];
 	/*
 	 * function to find a year is leapyear or not
 	 * @param year
@@ -43,13 +48,10 @@ public class Util
 	 */
 	public static boolean LeapYear(int year)
 	{
-		if(year%400 == 0)
+		if(year%400 == 0||year%4 == 0 && year%100!=0)
 			return true;
-		if(year%100 == 0)
+		else
 			return false;
-		if(year%4 == 0)
-			return true;
-		return false;
 		
 	}
 	/*
@@ -70,6 +72,238 @@ public class Util
 		
 	}
 	/*
+	 * calculates The Nth Power of two
+	 * @param power
+	 */
+	public static void twoPower(int power) {
+		// TODO Auto-generated method stub
+		int i;
+		if(power<=31)
+		{
+			System.out.println("2's Powers Upto 2^"+power+":");
+			for(i = 0;i<=power;i++)
+			{
+				System.out.println(Math.pow(2, i));
+			}
+		}
+		else
+		{
+			System.out.println("N should be less than or equal to 31");
+		}
+	}
+	// Tic Tac Toe Game Methods..
+		/*
+		 * This method is used to play tic tac toe game
+		 * 
+		 * @print the board after each player plays
+		 */
+		public static void playTicTacToe() {
+			initializeBoard();
+			do {
+				if (isBoardFull())
+					break;
+				computersTurn();
+				printBoard();
+				if (checkForWin()) {
+					System.out.println("Computer wins...");
+					break;
+				}
+				if (isBoardFull())
+					break;
+				playerTurn();
+				printBoard();
+				if (checkForWin()) {
+					System.out.println("Player wins...");
+					break;
+				}
+			} while (!checkForWin() && !isBoardFull());
+
+			if (isBoardFull() && !checkForWin())
+				System.out.println("Game was a tie...");
+		}
+
+		/*
+		 * This method is used to initialize the cross game board
+		 */
+		public static void initializeBoard() {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					playBoard[i][j] = ' ';
+				}
+			}
+		}
+
+		/*
+		 * This method is used to print the cross game board
+		 */
+		public static void printBoard() {
+			for (int i = 0; i < 3; i++) {
+				System.out.println();
+				for (int j = 0; j < 3; j++) {
+					System.out.print(playBoard[i][j]);
+					if (j < 2)
+						System.out.print("  | ");
+				}
+				System.out.println();
+				if (i < 2)
+					System.out.print("-------------");
+			}
+		}
+
+		/*
+		 * This method is used to check whether specified row and column is empty
+		 * 
+		 * @param mRow is the index for row
+		 * 
+		 * @param mColumn is the index for column
+		 * 
+		 * @return true if empty else false
+		 */
+		public static boolean isEmpty(int noOfRow, int noOfColumn) {
+			return (playBoard[noOfRow][noOfColumn] == ' ');
+		}
+
+		/*
+		 * This method is used to check for winner
+		 * 
+		 * @return true if anyone one of them is true
+		 */
+		public static boolean checkForWin() {
+			return (checkForRow() || checkForColumn() || checkForDiagonals());
+		}
+
+		/*
+		 * This method is used to check winning condition for row
+		 * 
+		 * @return true if whole row contains same character
+		 */
+		public static boolean checkForRow() {
+			for (int i = 0; i < 3; i++) {
+				if (checkRowColumn(playBoard[i][0], playBoard[i][1], playBoard[i][2])) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/*
+		 * This method is used to check winning condition for column
+		 * 
+		 * @return true if whole column contains same character
+		 */
+		public static boolean checkForColumn() {
+			for (int i = 0; i < 3; i++) {
+				if (checkRowColumn(playBoard[0][i], playBoard[1][i], playBoard[2][i])) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/*
+		 * This method is used to check winning condition for diagonals
+		 * 
+		 * @return true if either of the one diagonal has same character
+		 */
+		public static boolean checkForDiagonals() {
+			return (checkRowColumn(playBoard[0][0], playBoard[1][1], playBoard[2][2])
+					|| checkRowColumn(playBoard[1][2], playBoard[1][1], playBoard[2][2]));
+		}
+
+		/*
+		 * This method is used to check if the characters are same
+		 * 
+		 * @param c1,c2 nad c3 are characters 'x' or 'o'
+		 * 
+		 * @return true if all three characters are same
+		 */
+		public static boolean checkRowColumn(char character1, char character2, char character3) {
+			return (character1 != ' ' && character1 == character2 && character2 == character3);
+		}
+
+		/*
+		 * This method is used to check board is full or not
+		 * 
+		 * @return true if board is full
+		 */
+		public static boolean isBoardFull() {
+			boolean isFull = true;
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					if (playBoard[i][j] == ' ')
+						isFull = false;
+				}
+			}
+			return isFull;
+		}
+
+		/*
+		 * This method is used to generate random cell no for computer
+		 * 
+		 */
+		public static void computersTurn() {
+			int row = (int) (Math.random() * 3);
+			int column = (int) (Math.random() * 3);
+			if (isEmpty(row, column)) {
+				playBoard[row][column] = 'X';
+			} else {
+				if (!isBoardFull())
+					computersTurn();
+				else
+					System.out.println("Board is full");
+			}
+		}
+
+		/*
+		 * This method is used to accept random cell no from player
+		 * 
+		 */
+		public static void playerTurn() {
+			System.out.println("Enter row and Column between 0 to 2");
+			int row = Util.scanner.nextInt();
+			int column = Util.scanner.nextInt();
+			if (isEmpty(row, column)) {
+				playBoard[row][column] = 'o';
+			} else {
+				if (!isBoardFull())
+					playerTurn();
+				else
+					System.out.println("Board is full");
+			}
+		}
+
+	
+	/*
+	 * calculates the number of heads and tails
+	 * @param number_Times
+	 */
+	public static void flipCoin(int number_Times)
+	{
+		// TODO Auto-generated method stub
+		int i;
+		int Number_Heads = 0,Number_Tails = 0;
+		if(number_Times>0)
+		{
+			for(i=0;i<number_Times;i++)
+			{
+				if(Math.random()>0.5)
+					Number_Heads++;
+				else
+					Number_Tails++;
+			}
+		}
+		else
+		{
+			System.out.println("Run Again And Enter a positive Number");
+			System.exit(0);
+		}
+		System.out.println("Heads:"+Number_Heads);
+		System.out.println("Tails:"+Number_Tails);
+		System.out.println("Head Percentage:"+(Number_Heads*100)/number_Times);
+		System.out.println("Tail Percentage:"+(Number_Tails*100)/number_Times);
+
+	}
+	/*
 	 * Returns The Sq. Root Of The Given Num Using Newton's Method. 
 	 * @param num
 	 * @return
@@ -85,6 +319,257 @@ public class Util
         }
         return t;
     }
+	/*
+	 * calculates the nth harmonic value
+	 * @param hARMONIC_NUMBER
+	 */
+	public static void harmonicNumber(int hARMONIC_NUMBER)
+	{
+		// TODO Auto-generated method stub
+		int i;
+		double sumTotal=0;
+		if(hARMONIC_NUMBER>0)
+		{
+			for(i=1;i<=hARMONIC_NUMBER;i++)
+			{
+				sumTotal = sumTotal + Math.pow(i,-1);
+			}
+		}
+		else
+		{
+			System.out.println("Please Enter Value of N greater than 0 ");
+			System.exit(0);
+		}
+		System.out.println(hARMONIC_NUMBER+"th Harmonic Value = "+sumTotal);
+	}
+	/*
+	 * calculates the prime factors of the given number
+	 * @param number
+	 */
+	public static void primeFactor(int number) 
+	{
+		// TODO Auto-generated method stub
+		int i; 
+		while(number%2==0)
+		{
+			System.out.print(2+" ");
+			number/=2;
+		}
+		for(i=3;i<=Math.sqrt(number);i=i+2)
+		{
+			if(number%i == 0)
+			{
+				System.out.print(i+" ");
+				number/=i;
+			}
+		}
+		if(number>2)
+			System.out.print(number);
+	}
+	 /*
+	  * find the distinct triplets and returns the 
+	  * count of numbers of distinct triplets
+	  * @param []
+	  * @return 
+	  */
+	public static int triplets(int[] tripletArray) 
+	{
+		// TODO Auto-generated method stub
+		int i,j,k;
+		System.out.println("Distinct Triplets:");
+		int count = 0;
+		for(i=0 ;i<tripletArray.length;i++)
+		{
+			for(j=i+1;j<tripletArray.length;j++)
+			{
+				for(k=j+1 ;k<tripletArray.length;k++)
+				{
+					int sum = tripletArray[i]+tripletArray[j]+tripletArray[k];
+					if(sum==0)
+					{
+						System.out.println("("+ tripletArray[i]+","+ tripletArray[j]+","+ tripletArray[k]+")");
+						count++;
+					}
+				}
+			}
+		
+		}
+		return count ;
+	}
+	/*
+	 * calculates the win and loss percentage depending on the 
+	 * chances of win and loose by investing a bet amount in ech Bet
+	 * @param stake
+	 * @param trials
+	 * @param goal
+	 * @param betAmount
+	 */
+	public static void betTrials(double stake,double trials,double goal, int betAmount)
+	{
+		int win = 0;
+	    double winPerc=0,lossPerc=0;
+        for(int i = 0;i < trials;i++)
+        {
+        	double cash = stake;
+            while (cash > 0 && cash < goal)
+            {
+          
+                if(Math.random() > 0.5)
+                	cash = cash + betAmount;
+                else
+                	cash = cash - betAmount;
+            }
+            if(cash == goal)
+                win++;
+        }
+		//PRINTING OUTPUT
+	     System.out.println("Congrats!! You Won: " + win+" Times Out of "+trials);
+	   	 winPerc = ((win/trials)*100);
+	     System.out.println("Percentage of win is: " + winPerc);
+	   	 lossPerc = (100-winPerc);
+	     System.out.println("Percentage of loss is: " +lossPerc);
+	}
+	/*
+	 * finds permutation of the given string
+	 * @param permutestring
+	 * @param l
+	 * @param r
+	 */
+	public static void permute(String permutstring, int l, int r)
+	{
+		if (l == r)
+        {
+            System.out.println("l==r :");
+            System.out.println(permutstring);
+        }
+        else
+        {
+            for (int i = l; i <= r; i++)
+            {
+                System.out.println("Before swap :"+permutstring);    
+                permutstring = swap(permutstring,l,i);
+                System.out.println("After swap :"+permutstring);
+                permute(permutstring, l+1, r);
+                
+            }
+        }
+	        
+	}
+	/*
+	 * swap remaining letters of the given string
+	 * @param a
+	 * @param l
+	 * @param r
+	 */
+	public static String swap(String a, int i, int j)
+	{
+		 char temp;
+	     char[] charArray = a.toCharArray();
+	     temp = charArray[i] ;
+	     charArray[i] = charArray[j];
+	     charArray[j] = temp;
+	     return String.valueOf(charArray);
+	}
+	/*
+	 * finds the roots of the quadratic equation
+	 * @param paramA
+	 * @param paramB
+	 * @param paramC
+	 */
+	public static void solveEquation(int paramA, int paramB, int paramC) 
+	{
+		// TODO Auto-generated method stub
+		double root1,root2,delta;
+		
+		System.out.println("Given Eq. Is: "+paramA+"*x^2+"+paramB+"*x+"+paramC);
+		delta = paramB*paramB-4*paramA*paramC;
+		System.out.println("DElta:"+delta);
+		if(delta>0)
+		{
+			System.out.println(" Roots are real and unequal");
+			root1=(-paramB+Math.sqrt(delta)/2*paramA);
+			root2=(-paramB-Math.sqrt(delta)/2*paramA);
+
+			System.out.println(" First root is : " +root1);
+			System.out.println(" Second root is : " +root2);
+		}
+		else if (delta==0) 
+		{
+			System.out.println("Roots are real and equal");
+			root1=(-paramB+Math.sqrt(delta)/2*paramA);
+			
+			System.out.println("Root =" + root1);
+		}
+		else
+		{
+			System.out.println("Roots are Imaginary");
+		}
+	} 
+	/*
+	 * algorithm to find a guessed number between a range
+	 * @param start 
+	 * @param end
+	 * @return
+	 */
+	public static int findNum(int start, int end)
+	{
+		// TODO Auto-generated method stub
+		int mid=(start+end)/2;
+
+		if(start==mid)
+			System.out.println("is "+mid+" your Number");
+		else
+			System.out.println("Is your Number present  between "+start+" to mid="+mid+" ?");
+		try {
+			if(start==end)
+			{
+				System.out.println("I Think "+mid+" is your Number");
+				System.exit(0);
+			}
+				
+			else if(Util.scanner.nextBoolean()) 
+				findNum(start, mid);
+			else
+				findNum(mid+1, end);
+		}
+		catch(Exception exception) {
+			System.out.println("Exception:"+exception);
+		}
+		return 0;
+	}
+	/*
+	 * gives change to user with minimum number of possible notes
+	 * @param aMount
+	 */
+	public static void toChange(int aMount) 
+	{
+		// TODO Auto-generated method stub
+		int i,count=0; 
+		int [] nNotes = {1,2,5,10,50,100,500,1000};
+		try 
+		{
+			while(aMount>0)
+			{
+				for(i=nNotes.length-1;i>=0;i--)
+				{	
+					
+					if(aMount>=nNotes[i])
+					{	
+						aMount = aMount -nNotes[i];
+						count++;
+						System.out.println(nNotes[i]);
+						break;
+					}
+			
+				}
+			}
+		System.out.println(count+" needed to give change from Vending Machine");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 	/*
 	 * Returns The byte representation Of Decimal Number
 	 * into binary
@@ -202,36 +687,6 @@ public class Util
 	 */
 	public static boolean isAnagram(String str,String str1)
 	{
-		/*int x,y,i,j,cnt=0,rpt=0;
-		x = str.length();
-		y = str1.length();
-		if(x == y)
-		{
-			int z=0;
-			for(i=0;i<x;i++)
-			{
-				
-				for(j=0;j<x;j++)
-				{
-					if(str.charAt(i)==str1.charAt(j))
-					{
-						
-						if(z<=j && str.charAt(z) == str1.charAt(++z))
-						{
-							rpt++;
-						}
-							
-						cnt++;
-					}
-					
-				}
-			}
-			if((cnt-(rpt*2))==x)
-				return true;
-			
-		}
-		return false;
-	}*/
 		String s1 = str.replace("\\s","");
 		String s2 = str1.replace("\\s","");
 		boolean status = false;
@@ -449,11 +904,11 @@ public class Util
 					}
 				}
 			}
-			/*System.out.println("Sorted Array Of BubbleSort:");
+			System.out.println("Sorted Array Of BubbleSort:");
 			for(int i = 0;i<sTring.length;i++)
 			{
 				System.out.print( sTring[i]+"   ");
-			}*/
+			}
 			System.out.println();	
 			return sTring;
 		}
@@ -496,22 +951,6 @@ public class Util
 		{
 			// TODO Auto-generated method stub
 			int i,j;
-			/*for(j=1;j<string.length;j++)
-			{
-				i = j-1;  
-				while(i>=0)
-				{
-					if(string[j].compareTo(string[i])<0)
-					{
-						String str;
-						str = string[j];
-						string[j] = string[i];
-						string[i] = str;
-						i-=1;
-					}
-				
-				}
-			}*/
 			for(i = 1;i<string.length;i++) 
 			{
 				for(j =i;j>0;j--) 
@@ -524,8 +963,10 @@ public class Util
 					}
 				}
 			}
+			
 			for(i=0;i<string.length;i++)
 				System.out.print(string[i]+" ");
+			System.out.println();
 		}
 		/*
 		 * binary Search for Integers
@@ -676,26 +1117,7 @@ public class Util
 			while(character =='Y'||character =='y');
 			list.dispNode();
 			addToFile();
-				//System.out.println("List Content:");
-				//for(String str:list)
-				//System.out.println(str);
 		}
-	 	/*
-	 	 * to append searched word into file
-	 	 * @param array
-	 	 * @param word
-	 	 */
-	/*	public static void appendlist(String[] array, String word){
-			String newArray[] = new String[array.length+1];
-			for (int i = 0; i < newArray.length-1; i++) {
-				newArray[i]=array[i];
-			}
-			newArray[array.length] = word;
-			String [] sortList = bubbleSortString(newArray);
-			for (int i = 0; i < sortList.length; i++) {
-				System.out.print(sortList[i]+" ");
-			}
-		}*/
 		/*
 		 * writes data to the file
 		 * @throws Exception
@@ -706,9 +1128,9 @@ public class Util
 		      FileWriter fr1 =null;
 		    try 
 		    {
-		        File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/Order.txt");
+		        File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/File.txt");
 		        fr = new FileWriter(writeFile);
-		        fr1 = list.writeListNode(fr);
+		        fr1 = writeListNode(fr);
 		        System.out.println("updated list successfully added in file :");    
 		    }
 		    catch(Exception e) 
@@ -720,6 +1142,27 @@ public class Util
 		        fr.close();
 		        fr1.close();
 		    }
+		}
+		private static FileWriter writeListNode(FileWriter fr) throws IOException {
+			// TODO Auto-generated method stub
+			
+
+	        Node head = null;
+			if(head==null) 
+	        {
+	            System.out.println("Linklist is empty :");
+	            System.exit(0);
+	        }
+	        else 
+	        {
+	            Node temp = head;
+	            while(temp!=null)
+	            {
+	                fr.write(temp.data+" ");
+	                temp = temp.next;
+	            }
+	        }
+	        return fr;
 		}
 		/*
 		 * enqueues and dequeues people from queue
@@ -824,7 +1267,7 @@ public class Util
 			}
 			for(i=characters.length-1;i>=0;i--)
 			{
-				//queue.peek();
+				
 				char ch = queue.deQueue();
 				if(characters[i]==ch)
 					count++;
@@ -853,6 +1296,56 @@ public class Util
 	         
 			return false;
 		}
+		/*
+		 * it checks for the number is present in the array or not
+		 * @param array
+		 * @param item
+		 * @return
+		 */
+		public static boolean contains(int[] array, int item)
+		{
+			for (int number : array)
+			{
+				if (item == number) 
+				{
+					return true;
+				}
+			}
+			return false;
+		}     
+		/*
+		 * stores distinct random numbers into array
+		 * @param Number_Times
+		 * @param Number_Random  
+		 * @return []
+		 */
+		public static int [] randNumber(int Number_Times,int Number_Random)
+		{
+			int i,count=0,distinct=0;
+			int [] dDistinct ;
+			/*
+			 * Array Declaration to Store Distinct Numbers
+			 */
+		
+			dDistinct = new int [Number_Times];
+			while(distinct<Number_Times)
+			{
+				long random = (long) (100+Math.random() * (999-100));
+				count++;
+				if(contains(dDistinct,(int) random))
+					continue;
+				else
+				{
+					dDistinct[distinct++] = (int)random;
+					
+				}
+				/*if(distinct == Number_Times)
+					break;*/
+			}
+			
+			System.out.println("we need to generate "+count+" random numbers to print "+Number_Times+" distinct Coupon Numbers.");
+			return dDistinct;
+	    }
 		/*
 		 * print prime Number in Two d array
 		 * @param low
@@ -883,7 +1376,8 @@ public class Util
 			{
 				for (j = 0; j <list.get(i).size() ; j++) 
 				{
-					System.out.print(list.get(i).get(j)+" ");
+					//String.format ("%3d", list.get(i).get(j));
+					System.out.print(String.format ("%3d", list.get(i).get(j))+" ");
 				}
 				System.out.println();
 			}
@@ -1138,41 +1632,85 @@ public class Util
 				}
 			
 		}
-		public static void dispQueueCalender(int month, int year) 
+		/*public static void queueCalender(int month, int year) throws InterruptedException 
 		{
 			// TODO Auto-generated method stub
-			GenericQueue<GenericQueue<String>> week = new GenericQueue<GenericQueue<String>>(7);
-			
+			Queue<Queue<String>> week = new Queue<Queue<String>>();
+			Queue<String> weekDay = new Queue<String>();
+			String[] dayOfWeek = { "S", "M", "T","W", "Th", "F", "S" };
+			int[] noOfDays = { 0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+			int date = 1;
+			if (month == 2 || LeapYear(year))
+				noOfDays[2] = 29;
+			int day = weekDay(date,month, year);
+			for (int i = 0; i < dayOfWeek.length; i++) {
+				weekDay.enQueue(dayOfWeek[i]);
+			}
+			week.enQueue(weekDay);
+			int space = 0;
+			for (int i = 1; i <7; i++) 
+			{
+				weekDay = new Queue<String>();
+				if (i == 1) 
+				{
+					for (int k = 0; k < 7; k++) 
+					{
+						if (k < day) 
+						{
+							weekDay.enQueue("   ");
+						} 
+						else 
+						{
+							weekDay.enQueue(" "+String.valueOf(date)+" ");
+							date++;
+						}
+					}
+				} 
+				else
+				{
+					for (int k = 0; k < 7; k++)
+					{
+						if(date<=noOfDays[month])
+						{	if (space < day + 9) 
+							{
+								weekDay.enQueue(" "+String.valueOf(date)+" ");
+								date++;
+								space++;
+							}
+							else
+							{
+								weekDay.enQueue(String.valueOf(date));
+								date++;
+							}
+						}
+					}
+					week.enQueue(weekDay);
+				}
+			}
+			displayCalender(week,month,year);
+		}
+
+	public static void displayCalender(Queue<Queue<String>> week,int month,int year) throws InterruptedException 
+	{
+			String date = " ";
+			String[] monthName = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September",
+					"October", "November", "December" };
+			System.out.println("      Calender of " + monthName[month] + "  " + year);
+			System.out.println();
 			for (int i = 0; i < 7; i++) 
 			{
-				week.enQueue(new GenericQueue<String>(7));
+				Queue<String>weekDay = week.deQueue();
+				for (int j = 0; j < week.size(); j++) 
+				{
+				    date = weekDay.deQueue();
+				    if(date==null)
+				    	break;
+				    System.out.print(date+" ");
+				}
+				System.out.println();
 			}
-			// leave empty so that months[1] = "January"
-		    String[] months = {"",                              
-			           "January", "February", "March",
-			           "April", "May", "June",
-			           "July", "August", "September",
-			           "October", "November", "December"
-			       		};
-		       
-		       // days[i] = days in month i
-		    int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-		       // check for leap year
-		    if (month == 2 && Util.LeapYear(year)) 
-		    	days[month] = 29;
-
-		    System.out.println("   "+months[month]+" "+ year);
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
 		}
+*/
 		/*
 		 * Display Integer and other Two d Arrays.
 		 * @param number_Rows
@@ -1313,177 +1851,226 @@ public class Util
 			}
 			return string;
 		}
-		public static void hashFunction(String address) throws IOException
-		{
-			// TODO Auto-generated method stub
-			@SuppressWarnings("resource")
-			BufferedReader bfr = new BufferedReader(new FileReader(address));
-			String data = bfr.readLine().toLowerCase();
-			String [] string = data.split(" ");
-			int remainder;
-			int [] fileData = new int[string.length];
-			for (int i = 0; i < fileData.length; i++) 
-			{
-				fileData[i] = Integer.parseInt(string[i]); 
-			}
-			for (int i = 0; i < 11; i++) 
-			{
+		/*
+		 * This static method is to Map the number according to remainder generated
+		 * after dividing by 11
+		 * @param mSourceAddress is the address assign to file reader
+		 * @throws Exception
+		 */
+		public static void hashFunction(String mSourceAddress) throws IOException {
+			for (int i = 0; i < 11; i++) {
 				hashMap.put(i, new LinkedList<Integer>());
 			}
-			for (int i = 0; i < fileData.length; i++) 
-			{
-				remainder = fileData[i]%11;
-				switch(remainder)
-				{
-					case 0 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 1 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 2 : hashMap.get(remainder).insertData(fileData[i]);
-					 		 break;
-					case 3 : hashMap.get(remainder).insertData(fileData[i]);
-					 		 break;
-					case 4 : hashMap.get(remainder).insertData(fileData[i]);
-					  		 break;
-					case 5 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 6 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 7 : hashMap.get(remainder).insertData(fileData[i]);
-					 		 break;
-					case 8 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 9 : hashMap.get(remainder).insertData(fileData[i]);
-							 break;
-					case 10: hashMap.get(remainder).insertData(fileData[i]);
-					 		 break;
-					default :System.out.println("Invalid data");
+			BufferedReader br = new BufferedReader(new FileReader(mSourceAddress));
+			String string = br.readLine();
+			String[] array = string.split(" ");
+			for (String number : array) {
+				int mNumber = Integer.valueOf(number);
+				addToSlot(mNumber);
+				linkList.add(mNumber);
+			}
+			br.close();
+			searchNumber(mSourceAddress);
+		}
+
+		/*
+		 * This method is used to search the number in the file. If found then
+		 * delete or If not found then add
+		 */
+		public static void searchNumber(String mSourceAddress) throws IOException {
+			char answer = ' ';
+			do {
+				System.out.println("Enter the number to be searched..");
+				int number = scanner.nextInt();
+				if (linkList.contains(number)) {
+					System.out.println(number + " is found.. deleted from file..");
+					linkList.remove(linkList.indexOf(number));
+					
+					
+				} else {
+					System.out.println(number + " is not found..added to file.. ");
+					linkList.add(number);
+					addToSlot(number);
+				}
+				
+				System.out.println("Do u wish to continue..type(Y/N)");
+				answer = scanner.next().charAt(0);
+			} while (answer == 'Y' || answer == 'y');
+			for (int i = 0; i < hashMap.size(); i++) {
+				System.out.print("["+i+"] :");
+				for (int j = 0; j < hashMap.get(i).size(); j++) {
+					System.out.print(hashMap.get(i).get(j) + "  ");
+				}
+				System.out.println();
+			}
+			String strNumbers = "";
+			for (int i = 0; i < hashMap.size(); i++) {
+				for (int j = 0; j < hashMap.get(i).size(); j++) {
+					strNumbers = strNumbers+hashMap.get(i).get(j)+ " "; 
 				}
 			}
-			for (int i = 0; i < 11; i++)
-			{
-				System.out.print("{ ["+i+"] : ");	
-				hashMap.get(i).dispNode();
-				System.out.print("}");
-			}
-			System.out.println();
-			char character = ' ';
-			do
-			{
-				System.out.println("Enter a number That You Want To Find:");
-				int word = Util.scanner.nextInt();
-				remainder = word%11;
-				if(integerList.search(word))
-				{
-					System.out.println("integer is already there in List.");
-					integerList.remove(word);
-					System.out.println("so removed From List.");
-				}
-				else
-				{
-					System.out.println("int is not there in List.");
-					hashMap.get(remainder).insertData(word);
-					System.out.println("Added To The List.");
-				}
-				System.out.println("Do you want to find another word:");
-				character = Util.scanner.next().charAt(0);
-			}
-			while(character =='Y'||character =='y');
-			for (int i = 0; i < 11; i++)
-			{
-				System.out.print("{ ["+i+"] : ");	
-				hashMap.get(i).dispNode();
-				System.out.print("}");
-			}
-		} 
-}
-	
-		/*public static void orderedList() throws IOException
+			FileWriter fr = new FileWriter("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/File.txt");
+			fr.write(strNumbers);
+			fr.flush();
+			fr.close();
+			
+		}
+
+		/*
+		 * This static method is to add the particular slot according to the
+		 * remainder after dividing by 11
+		 * @param mNumber is an integer
+		 */
+		public static void addToSlot(int mNumber)
+		{
+			int remainder = 0;
+			remainder = mNumber % 11;
+			hashMap.get(remainder).add(mNumber);
+		}
+		/*
+		 * prints calender using queue
+		 * @param month 
+		 * @param year
+		 */
+		public static void queueCalender(int month, int year)
 		{
 			// TODO Auto-generated method stub
-		        File file=null;
-				BufferedReader br =null;
-				try
-				{
-					file = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/File1");
-					br = new BufferedReader(new FileReader(file));
-					String line;
-			        System.out.println("Reading File And Sorting:");	
-					while((line = br.readLine())!=null) 
-					{
-			       
-			        	String str= line;
-			        		
-			        	String SortArr[] = bubbleSortString(str);
-			        	int length = SortArr.length;
-			        	for(int i=0;i<length;i++) 
-			        	{
-			        		if(SortArr[i]==" ")
-			        		{
-			        			continue;
-			        		}else
-			        		{
-			        			
-			        			integerList.insertData(SortArr[i]);
-			        		}
-			        	}
-			        	
-			        }
-				}
-				catch(Exception e) 
-				{
-					e.printStackTrace();
-				}finally
-				{
-					br.close();
-				}  	
-				integerList.dispNode(); 
-				System.out.println("");
-		        System.out.println("Enter a element to search :");
-		        String num="";
-		        String strNo = scanner.nextLine();
-		        int ch = integerList.search(num);
-		        
-		        if(ch==0) 
-		        {
-		        	System.out.println("Num is Not present in a list So we insert it");
-		        	integerList.InsertRightPosition(num);
-		        	System.out.println("After insert :");
-		        	integerList.dispNode();
-		         }
-		        else
-		        {
-		        	System.out.println(ch+" Times num present in a list & we delete it");
-		        	for(int i=0;i<ch;i++) 
-		        	{
-		        		integerList.remove(num);
-		        	}
-		        	
-		        }   
+			int count=0;
+			int number =1;
+			Queue<Queue<String>> queue = new Queue<Queue<String>>();
+			for(int i=0;i<6;i++) {
+			queue.enQueue(new Queue<String>());
 			}
-		/*public static char[] bubbleSort(String str){
-			
-			char charArr[] = str.toCharArray();  
-			int size = charArr.length;
-			
-			for(int i=0;i<size-1;i++) {
-				int flag = 0;
-				for(int j=0;j<size-1;j++) {
+			//to return the day where we will start the month
+			int day=weekDay(1,month, year);
+			//making a Queue to store the days of the week
+			queue.get(0).enQueue("Sun");
+			queue.get(0).enQueue("Mon");
+			queue.get(0).enQueue("Tue");
+			queue.get(0).enQueue("Wed");
+			queue.get(0).enQueue("Thu");
+			queue.get(0).enQueue("Fri");
+			queue.get(0).enQueue("Sat");
+			String[] months = {"",                              
+			           "January", "February", "March",
+			           "April", "May", "June",
+			           "July", "August", "September",
+			           "October", "November", "December"
+			       		};
+		       
+			//array list for number of days that a month carries
+			int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 					
-					if(charArr[j]>charArr[j+1]) {
-						flag = flag+1;
-						char temp = charArr[j];
-						charArr[j] = charArr[j+1];
-						charArr[j+1] = temp;
-					}
-				} 
-				if(flag==0){
-					break;
-				}
-			}
-			return charArr;
+			//Setting feb as 29 if the year is leap
+			if(LeapYear(year) && month==2)
+				daysOfTheMonths[2]=29;
 			
-		}*/
+			for(int j = 1; j < 7; j++ ) {
+				for(int k =0;k<7;k++) {
+					if(count < day) {
+						queue.get(j).enQueue("   ");
+						count++;
+					}
+					else if(number<=daysOfTheMonths[month]) {
+						if(number<10)
+							queue.get(j).enqueue(" "+Integer.toString(number++)+" ");
+						else
+						queue.get(j).enqueue(Integer.toString(number++)+" ");
+					}
+				}
+		    }
+			System.out.println(" "+months[month]+" "+year);
+			for(int i=0;i<6;i++) {
+				for(int j =0;j<7;j++) {
+					String date =queue.get(i).deQueue();
+					if(date==null) {
+						break;
+					}
+					System.out.print(" "+date);
+				}
+				System.out.println();
+			}
+		}
+	/*
+	 * prints calender using stack
+	 * @param month
+	 * @param year
+	 */
+	public static void stackCalender(int month, int year) 
+	{
+			// TODO Auto-generated method stub
+		int count=0;
+		int number =1;
+		int indexCounter =0;
+		int loopCounter =0;
+		Stack<String> stack=new Stack<>();
+		Stack<String> stack1=new Stack<>();
+		String []weekDays = {"Sun","Mon","Tue","Wed","Thr","Fri","Sat"};
+
+		//array list for number of days that a month carries
+		int []days = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+				
+		//Setting feb as 29 if the year is leap
+		if(LeapYear(year)&& month ==2)
+			days[2]=29;
+		String[] months = {"",                              
+		           "January", "February", "March",
+		           "April", "May", "June",
+		           "July", "August", "September",
+		           "October", "November", "December"
+		       		};
+		//to return the day where we will start the month
+		int day=weekDay(1,month, year);		
+
+		//for(int i = 0; i < 7; i++ ) {
+		while(count < day) {
+			stack1.push("   ");
+		    count++;
+		}
+		while(number<=days[month])
+		{
+			if(number<10)
+			{	stack1.push(" "+Integer.toString(number++)+" ");
+				number++;
+			}
+			else
+			{
+				stack1.push(Integer.toString(number++)+" ");
+				number++;
+			}
+		}
+		//to make sure that printing array doesnt runs out of loop
+		indexCounter =count+(number-1);
+
+		//moving elements from one stack to another
+		for(int i=0;i<=stack1.size()-1;i++) 
+		{
+			stack1.push(stack1.pop());
+		}
+
+		//Displaying the Calander
+		//month and year
+		System.out.println(" "+months[month]+" "+year);
+		//days of the week
+		for (int i = 0; i < weekDays.length; i++)
+		{
+			System.out.print(" "+weekDays[i]);
+		}
+		System.out.println();
+		for(int i =0;i<6;i++) 
+		{
+			for(int j=0;j<7;j++) 
+			{
+				/*if(loopCounter==indexCounter)
+					break;*/
+				System.out.print(" "+stack1.pop());
+				//loopCounter++;
+			}
+			System.out.println();
+		}
+	}
+}
+
 
 		
 

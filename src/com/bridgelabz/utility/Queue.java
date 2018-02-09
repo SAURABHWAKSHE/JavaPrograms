@@ -83,4 +83,9 @@ public class Queue<Item>
 
         return item;
     }
+
+	public Object get(int index) {
+		// TODO Auto-generated method stub
+		return index;
+	}
 }
