@@ -36,25 +36,7 @@ public class GenericLinkedList<T>
             temp.next=new Node(data);
         }
     }
- /*  @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void PrintLinkNode(Queue link) 
-    {
-        Node temp=head;
-        while(temp!=null) 
-        {
-            link.enQueue(temp.data);
-            temp=temp.next;
-        }
-    }
-    public void PrintLinkNode(LinkedList<T> myobj)
-    {
-    	Node temp=head;
-        while(temp!=null) 
-        {
-        	myobj.insertData(temp.data);
-            temp=temp.next;
-        }
-    }*/
+ 
     public void dispNode() 
     {
     	Node temp=head;
@@ -64,18 +46,6 @@ public class GenericLinkedList<T>
             temp=temp.next;
         }
     }
-    /*public int[] StorePrintLinkNode() 
-    {
-        int MyArray[] = new int[100];
-        int i=0;
-        Node temp=head;
-        while(temp!=null)
-        {
-        	MyArray[i++]=(int)temp.data;
-            temp=temp.next;
-        }
-        return MyArray;
-    }*/
 	 public boolean search(T data) 
 	 {
 	        
