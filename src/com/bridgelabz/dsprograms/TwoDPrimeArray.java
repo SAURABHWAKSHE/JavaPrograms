@@ -11,7 +11,7 @@ public class TwoDPrimeArray
 		low = Util.scanner.nextInt();
 		System.out.println("Enter Higher Limit:");
 		high = Util.scanner.nextInt();
-		//Util.primeArray(low ,high);
+		Util.primeArray(low ,high);
 		Util.primeAnagram(low ,high);
 	}
 }

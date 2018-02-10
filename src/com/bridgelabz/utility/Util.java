@@ -1,6 +1,5 @@
 package com.bridgelabz.utility;
 
-import com.bridgelabz.dsprograms.year;
 import com.bridgelabz.utility.GenericLinkedList;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -263,7 +262,7 @@ public class Util
 			int row = Util.scanner.nextInt();
 			int column = Util.scanner.nextInt();
 			if (isEmpty(row, column)) {
-				playBoard[row][column] = 'o';
+				playBoard[row][column] = 'O';
 			} else {
 				if (!isBoardFull())
 					playerTurn();
@@ -1128,9 +1127,9 @@ public class Util
 		      FileWriter fr1 =null;
 		    try 
 		    {
-		        File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/File.txt");
+		        File writeFile = new File("/home/bridgeit/Desktop/Saurabh/JavaPrograms/src/com/bridgelabz/dsprograms/Unorder.txt");
 		        fr = new FileWriter(writeFile);
-		        fr1 = writeListNode(fr);
+		        fr1 = list.writeListNode(fr);
 		        System.out.println("updated list successfully added in file :");    
 		    }
 		    catch(Exception e) 
@@ -1562,7 +1561,7 @@ public class Util
 		    	   days[month] = 29;
 
 		       System.out.println("   "+months[month]+" "+ year);
-		       String dayOfWeek[] = {"S "," M "," T "," W "," T "," F "," S"};
+		       String dayOfWeek[] = {" S "," M "," T "," W "," T "," F "," S"};
 		       for (int i = 0; i < dayOfWeek.length; i++)
 		       {
 		    	   System.out.print(" "+dayOfWeek[i]);
@@ -1916,11 +1915,11 @@ public class Util
 			
 		}
 
-		/*
-		 * This static method is to add the particular slot according to the
-		 * remainder after dividing by 11
-		 * @param mNumber is an integer
-		 */
+	    /*
+		* This static method is to add the particular slot according to the
+		* remainder after dividing by 11
+		* @param mNumber is an integer
+		*/
 		public static void addToSlot(int mNumber)
 		{
 			int remainder = 0;
@@ -1937,53 +1936,56 @@ public class Util
 			// TODO Auto-generated method stub
 			int count=0;
 			int number =1;
-			Queue<Queue<String>> queue = new Queue<Queue<String>>();
-			for(int i=0;i<6;i++) {
-			queue.enQueue(new Queue<String>());
+			LinkedListQueue<LinkedListQueue<String>> queue = new LinkedListQueue<LinkedListQueue<String>>();
+			for(int i=0;i<6;i++) 
+			{
+			queue.enqueue(new LinkedListQueue<String>());
 			}
 			//to return the day where we will start the month
-			int day=weekDay(1,month, year);
+			int day=weekDay(number,month, year);
 			//making a Queue to store the days of the week
-			queue.get(0).enQueue("Sun");
-			queue.get(0).enQueue("Mon");
-			queue.get(0).enQueue("Tue");
-			queue.get(0).enQueue("Wed");
-			queue.get(0).enQueue("Thu");
-			queue.get(0).enQueue("Fri");
-			queue.get(0).enQueue("Sat");
+			queue.getAtPosition(0).enqueue("sun");queue.getAtPosition(0).enqueue("mon");queue.getAtPosition(0).enqueue("tue");
+			queue.getAtPosition(0).enqueue("wed");queue.getAtPosition(0).enqueue("thr");queue.getAtPosition(0).enqueue("fri");
+			queue.getAtPosition(0).enqueue("sat");
+			
+			//array list for number of days that a month carries
+			int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 			String[] months = {"",                              
 			           "January", "February", "March",
 			           "April", "May", "June",
 			           "July", "August", "September",
 			           "October", "November", "December"
 			       		};
-		       
-			//array list for number of days that a month carries
-			int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
-					
 			//Setting feb as 29 if the year is leap
-			if(LeapYear(year) && month==2)
+			if(LeapYear(year)&& month==2)
 				daysOfTheMonths[2]=29;
 			
-			for(int j = 1; j < 7; j++ ) {
-				for(int k =0;k<7;k++) {
-					if(count < day) {
-						queue.get(j).enQueue("   ");
+			for(int j = 1; j < 7; j++ ) 
+			{
+				for(int k =0;k<7;k++) 
+				{
+					if(count < day) 
+					{
+						queue.getAtPosition(j).enqueue("   ");
 						count++;
 					}
-					else if(number<=daysOfTheMonths[month]) {
+					else if(number<=daysOfTheMonths[month]) 
+					{
 						if(number<10)
-							queue.get(j).enqueue(" "+Integer.toString(number++)+" ");
+							queue.getAtPosition(j).enqueue(" "+Integer.toString(number++)+" ");
 						else
-						queue.get(j).enqueue(Integer.toString(number++)+" ");
+						queue.getAtPosition(j).enqueue(Integer.toString(number++)+" ");
 					}
 				}
 		    }
 			System.out.println(" "+months[month]+" "+year);
-			for(int i=0;i<6;i++) {
-				for(int j =0;j<7;j++) {
-					String date =queue.get(i).deQueue();
-					if(date==null) {
+			for(int i=0;i<6;i++) 
+			{
+				for(int j =0;j<7;j++)
+				{
+					String date =queue.getAtPosition(i).dequeue();
+					if(date==null)
+					{
 						break;
 					}
 					System.out.print(" "+date);
@@ -2003,56 +2005,46 @@ public class Util
 		int number =1;
 		int indexCounter =0;
 		int loopCounter =0;
-		Stack<String> stack=new Stack<>();
-		Stack<String> stack1=new Stack<>();
-		String []weekDays = {"Sun","Mon","Tue","Wed","Thr","Fri","Sat"};
-
+		LinkedListStack<String> stack1=new LinkedListStack<>();
+		LinkedListStack<String> stack2 = new LinkedListStack<String>();
+		String []weekDays = {"sun","mon","tue","wed","thr","fri","sat"};
+		
 		//array list for number of days that a month carries
-		int []days = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+		int []daysMonth = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 				
 		//Setting feb as 29 if the year is leap
-		if(LeapYear(year)&& month ==2)
-			days[2]=29;
-		String[] months = {"",                              
-		           "January", "February", "March",
-		           "April", "May", "June",
-		           "July", "August", "September",
-		           "October", "November", "December"
-		       		};
+		if(LeapYear(year) && month==2)
+			daysMonth[2]=29;
+		
 		//to return the day where we will start the month
-		int day=weekDay(1,month, year);		
-
+		int day=weekDay(number,month, year);		
+		
 		//for(int i = 0; i < 7; i++ ) {
 		while(count < day) {
 			stack1.push("   ");
 		    count++;
 		}
-		while(number<=days[month])
+		while(number<=daysMonth[month]) 
 		{
 			if(number<10)
-			{	stack1.push(" "+Integer.toString(number++)+" ");
-				number++;
-			}
+				stack1.push(" "+Integer.toString(number++)+" ");
 			else
-			{
 				stack1.push(Integer.toString(number++)+" ");
-				number++;
-			}
 		}
 		//to make sure that printing array doesnt runs out of loop
 		indexCounter =count+(number-1);
-
+		
 		//moving elements from one stack to another
-		for(int i=0;i<=stack1.size()-1;i++) 
+		for(int i=stack1.size()-1;i>=0;i--) 
 		{
-			stack1.push(stack1.pop());
+			stack2.push(stack1.pop());
 		}
-
+		
 		//Displaying the Calander
 		//month and year
-		System.out.println(" "+months[month]+" "+year);
+		System.out.println(" "+daysMonth[month]+" "+year);
 		//days of the week
-		for (int i = 0; i < weekDays.length; i++)
+		for (int i = 0; i < weekDays.length; i++) 
 		{
 			System.out.print(" "+weekDays[i]);
 		}
@@ -2061,16 +2053,13 @@ public class Util
 		{
 			for(int j=0;j<7;j++) 
 			{
-				/*if(loopCounter==indexCounter)
-					break;*/
-				System.out.print(" "+stack1.pop());
-				//loopCounter++;
+				if(loopCounter==indexCounter)
+					break;
+				System.out.print(" "+stack2.pop());
+				loopCounter++;
 			}
 			System.out.println();
 		}
+	
 	}
 }
-
-
-		
-

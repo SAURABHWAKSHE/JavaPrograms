@@ -1,5 +1,4 @@
 package com.bridgelabz.utility;
-
 import java.util.NoSuchElementException;
 
 public class Stack<T>
@@ -7,13 +6,12 @@ public class Stack<T>
 	private Node<T> top = null;
 	private int size=0;
     /*
-    * Helper Class for Stack.
-    */
+     * Helper Class for Stack.
+     */
     private static class Node<T> 
     {
         private T data;
         private Node<T> next = null;
-
         Node(T element) 
         {
             data = element;
@@ -22,11 +20,11 @@ public class Stack<T>
     public void push(T element)
     {
         Node<T> newItem = new Node<T>(element);
-
         if (top == null) 
         {
             top = newItem;
-        } else 
+        }
+        else 
         {
             // New Top
             newItem.next = top;
@@ -62,4 +60,4 @@ public class Stack<T>
     {
 		return size;
     }
-}
+}															

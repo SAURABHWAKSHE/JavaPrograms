@@ -5,7 +5,6 @@ import com.bridgelabz.utility.Util;
 
 public class CalenderStack
 {
-
 	 public static void main(String[] args) throws InterruptedException 
 	 {
 		 System.out.println("Enter Month:");
@@ -13,6 +12,5 @@ public class CalenderStack
 	     System.out.println("Enter Year:");
 	     int year = Util.scanner.nextInt();     
 	     Util.stackCalender(month,year);
-	 }
-	
+	 }	
 }
