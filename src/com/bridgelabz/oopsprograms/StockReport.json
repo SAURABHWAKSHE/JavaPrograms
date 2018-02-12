@@ -1,0 +1,22 @@
+{
+	"CompanyShares": [
+		{
+			"Price": 1000.0,
+			"TotalPrice": 100000.0,
+			"Shares": 100,
+			"Name": "TCS"
+		},
+		{
+			"Price": 25000.0,
+			"TotalPrice": 1250000.0,
+			"Shares": 50,
+			"Name": "IBM"
+		},
+		{
+			"Price": 2300.0,
+			"TotalPrice": 1150000.0,
+			"Shares": 500,
+			"Name": "INfi"
+		}
+	]
+}

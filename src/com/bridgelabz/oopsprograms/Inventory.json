@@ -1,0 +1,44 @@
+{
+	"Pulses": [
+		{
+			"Price": 150.0,
+			"TotalPrice": 750.0,
+			"Weight": 5.0,
+			"Name": "pea"
+		},
+		{
+			"Price": 150.0,
+			"TotalPrice": 300.0,
+			"Weight": 2.0,
+			"Name": "nuts"
+		}
+	],
+	"Wheat": [
+		{
+			"Price": 32.0,
+			"TotalPrice": 160.0,
+			"Weight": 5.0,
+			"Name": "gold"
+		},
+		{
+			"Price": 30.0,
+			"TotalPrice": 150.0,
+			"Weight": 5.0,
+			"Name": "goldengold"
+		}
+	],
+	"Rice": [
+		{
+			"Price": 60.0,
+			"TotalPrice": 300.0,
+			"Weight": 5.0,
+			"Name": "Basmati"
+		},
+		{
+			"Price": 70.0,
+			"TotalPrice": 350.0,
+			"Weight": 5.0,
+			"Name": "biryani"
+		}
+	]
+}
