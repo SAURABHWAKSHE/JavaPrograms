@@ -2127,4 +2127,42 @@ public class Util {
 		filewriter.close();
 		System.out.println("File has been Written Successfully.");
 	}
+
+	public static void deckOfCards()
+	{
+		// TODO Auto-generated method stub
+		String[] suits_arr = {"Club","Diamonds","Heart","Spades"};
+		String [] ranks_arr = {"2","3","4","5","6","7","8","9","10","Queen","King","Jack","Ace"};
+		String[] pack = new String [suits_arr.length*ranks_arr.length];
+		int i,j,k=0;
+		
+		for(i=0;i<suits_arr.length;i++)
+		{
+			for(j=0;j<ranks_arr.length;j++)
+			{
+				pack[k] = ranks_arr[j]+" "+suits_arr[i];
+				k++;
+			}
+		}
+		for(i=0;i<pack.length;i++)
+		{
+			int r = (int)( 1 +( Math.random()* (pack.length-1)));
+			String temp = pack[r];
+			pack[r] = pack[i];
+			pack[i] = temp;
+		}
+		int colSize = 9,z=0;
+		String [][] disp_Result = new String [suits_arr.length][colSize];
+		for(i=0;i<suits_arr.length;i++)
+		{
+			System.out.println("--------Player "+(i+1)+"--------");
+			for(j=0;j<colSize;j++)
+			{
+				System.out.println(pack[z]);
+				z++;
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
 }
